@@ -1,4 +1,5 @@
 import * as React from "react";
+import e2pLogo from "../../images/logo6.png";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,10 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import "./Header.css";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Ürünler", "Hakkımızda", "İletişim"];
 
 const Header = () => {
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -28,27 +28,20 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" color="inherit">
+    <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/home"
+          <Box
+            component="img"
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              height: "auto",
+              width: "auto",
+              maxHeight: { xs: 233, md: 167 },
+              maxWidth: { xs: 350, md: 250 },
             }}
-          >
-            LOGO
-          </Typography>
+            alt="Easy2Patch"
+            src={e2pLogo}
+          />
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -86,42 +79,50 @@ const Header = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} justifyContent="center" aligntItems="center">
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  fontWeight: "bold",
+                  display: "block",
+                }}
               >
                 {page}
               </Button>
             ))}
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
-            <Button variant="contained" size="small" sx={{ marginRight:"1rem"}}>
-              <Link to="/login">Login</Link>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ backgroundColor: "#F5BA84", marginRight: "1rem" }}
+            >
+              <Link
+                to="/login"
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                }}
+              >
+                Login
+              </Link>
             </Button>
-            <Button variant="contained" size="small">
-              <Link to="/register">Register</Link>
+            <Button variant="contained" size="small" sx={{ backgroundColor:"white", color:"black"}}>
+              <Link
+                to="/register"
+                style={{
+                  color: "black",
+                  fontWeight: "bold",
+                  textDecoration: "none",
+                }}
+              >
+                Register
+              </Link>
             </Button>
           </Box>
         </Toolbar>
