@@ -11,7 +11,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import "./Header.css";
 
 const pages = ["Ürünler", "Hakkımızda", "İletişim"];
@@ -28,7 +27,8 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static"  style={{ backgroundColor: 'rgb(2,153,173)',
+      background: 'linear-gradient(90deg, rgba(2,153,173,1) 0%, rgba(4,37,86,1) 70%, rgba(2,9,64,1) 100%)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
@@ -36,8 +36,8 @@ const Header = () => {
             sx={{
               height: "auto",
               width: "auto",
-              maxHeight: { xs: 233, md: 167 },
-              maxWidth: { xs: 350, md: 250 },
+              maxHeight: { xs: 100, md: 167 },
+              maxWidth: { xs: 100, md: 250 },
             }}
             alt="Easy2Patch"
             src={e2pLogo}
@@ -95,11 +95,11 @@ const Header = () => {
               </Button>
             ))}
           </Box>
-          <Box sx={{ display: { xs: "flex" } }}>
+          <Box sx={{ display: { xs: "flex" } , flexDirection: { xs: "column", md:"row", lg:"row", xl:"row" } }}>
             <Button
               variant="contained"
-              size="small"
-              sx={{ backgroundColor: "#F5BA84", marginRight: "1rem" }}
+              size="large"
+              sx={{ backgroundColor: "#F5BA84", marginRight: "1rem", marginTop:{xs:".5rem"}, width: { xs: "5rem" } , height: { xs:"2rem" }, fontSize: { xs: ".8rem"} }}
             >
               <Link
                 to="/login"
@@ -112,11 +112,11 @@ const Header = () => {
                 Login
               </Link>
             </Button>
-            <Button variant="contained" size="small" sx={{ backgroundColor:"white", color:"black"}}>
+            <Button variant="contained" size="large" sx={{ backgroundColor:"#F5BA84", color:"black", marginTop:{xs:".5rem"}, marginBottom:{xs:".5rem"} , width: { xs: "5rem" } , height: { xs:"2rem" }, fontSize: { xs: ".8rem"} }}>
               <Link
                 to="/register"
                 style={{
-                  color: "black",
+                  color: "white",
                   fontWeight: "bold",
                   textDecoration: "none",
                 }}

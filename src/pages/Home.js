@@ -1,8 +1,9 @@
 import Search from "../components/Search/Search"
+import "./Home.css"
 
 const Home = () => {
     return (
-        <div>
+        <div className="home">
             <Search />
         </div>
     )
