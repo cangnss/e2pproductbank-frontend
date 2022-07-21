@@ -35,7 +35,7 @@ const Footer = () => {
         </Grid>
         <Grid item xs={12} md={4} lg={4} xl={4}>
           <div id="footer-item2">
-            <h2>İLETİŞİM</h2>
+            <h2>BİZE ULAŞIN</h2>
             <List>
               <ListItem disablePadding>
                 <ListItemButton>
