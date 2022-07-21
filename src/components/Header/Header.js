@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -36,7 +36,7 @@ const Header = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -118,10 +118,10 @@ const Header = () => {
           </Box>
           <Box sx={{ display: { xs: "flex" } }}>
             <Button variant="contained" size="small" sx={{ marginRight:"1rem"}}>
-              Login
+              <Link to="/login">Login</Link>
             </Button>
             <Button variant="contained" size="small">
-              Register
+              <Link to="/register">Register</Link>
             </Button>
           </Box>
         </Toolbar>
