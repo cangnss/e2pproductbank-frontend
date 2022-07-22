@@ -1,5 +1,5 @@
 import { Button, Paper } from "@mui/material";
-import Carousel from "react-material-ui-carousel/dist/components/Carousel";
+import Carousel from "react-material-ui-carousel";
 import React from "react";
 import "./About.css";
 
