@@ -1,0 +1,12 @@
+.about{
+    height: 100vh;
+    background-color:#AED1FF;
+}
+.items{
+    display: block;
+    height: 400px;
+
+    margin-top: 6.8rem;
+    margin-left: 6.8rem;
+    margin-right: 6.8rem;
+}
