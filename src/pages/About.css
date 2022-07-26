@@ -1,12 +1,102 @@
 .about{
     height: 100vh;
-    background-color:#AED1FF;
+    
 }
-.items{
-    display: block;
-    height: 400px;
+.item1{
+    text-align: center;
+    float: left;
+    width: 350px;
+    height: 350px;
+    border-radius: 1.2rem;
+    box-shadow: 10px 10px 5px grey;
+    background: rgb(254,254,254);
+    background: linear-gradient(139deg, rgba(254,254,254,1) 77%, rgba(3,136,161,1) 100%);  
+  
+    
+}
+.item2{
+    text-align: center;
+    float: left;
+    width: 350px;
+    height: 350px;
+    border-radius: 1.2rem;
+    box-shadow: 10px 10px 5px grey;
+    background: rgb(254,254,254);
+    background: linear-gradient(139deg, rgba(254,254,254,1) 77%, rgba(3,136,161,1) 100%);  
+    
+}
+.item3{
+    text-align: center;
+    float: left;
+    width: 350px;
+    height: 350px;
+    border-radius: 1.2rem;
+    box-shadow: 10px 10px 5px grey;
+    background: rgb(254,254,254);
+    background: linear-gradient(139deg, rgba(254,254,254,1) 77%, rgba(3,136,161,1) 100%);  
 
-    margin-top: 6.8rem;
-    margin-left: 6.8rem;
-    margin-right: 6.8rem;
+    
+}
+.item4{
+    text-align: center;
+    float: left;
+    width: 350px;
+    height: 350px;
+    border-radius: 1.2rem;
+    box-shadow: 10px 10px 5px grey;
+    background: rgb(254,254,254);
+    background: linear-gradient(139deg, rgba(254,254,254,1) 77%, rgba(3,136,161,1) 100%);  
+    
+}
+.item5{
+ 
+    text-align: center;
+    float: left;
+    width: 350px;
+    height: 350px;
+    border-radius: 1.2rem;
+    box-shadow: 10px 10px 5px grey;
+    background: rgb(254,254,254);
+    background: linear-gradient(139deg, rgba(254,254,254,1) 77%, rgba(3,136,161,1) 100%);  
+
+  
+    
+}
+.item1 p{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+    text-align:justify;
+}
+.item2 p{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+    text-align:justify;
+}
+.item3 p{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+    text-align:justify;
+}
+
+.item4 p{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+    text-align:justify;
+}
+.item5 p{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 15px;
+    text-align:justify;
+}
+
+.title{
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight:bold; 
+    font-size: 20px;
 }

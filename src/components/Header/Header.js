@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import "./Header.css";
 
-const pages = ["Ürünler", "Hakkımızda", "İletişim"];
+const pages = [{ name: "Products", path:"/"}, { name:"About", path:"about"}, { name:"Contact", path:"contact"}];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -73,8 +73,8 @@ const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><Link style={{ textDecoration: "none", color:"black"}} to={page.path}>{page.name}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -82,7 +82,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} justifyContent="center" aligntItems="center">
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
@@ -91,7 +91,7 @@ const Header = () => {
                   display: "block",
                 }}
               >
-                {page}
+                <Link style={{ textDecoration:"none", color:"white" }} to={page.path}>{page.name}</Link>
               </Button>
             ))}
           </Box>
