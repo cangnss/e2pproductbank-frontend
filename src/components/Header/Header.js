@@ -190,25 +190,27 @@ const Header = () => {
             </Button>
           </Box>
           <Box>
-            <FormGroup sx={{ display: "flex", flexDirection: "row" }}>
-              <FormControl size="small">
-                <TextField
-                  id="outlined-select-currency"
-                  select
-                  size="small"
-                  value={lang}
-                  onChange={handleLangChange}
-                  sx={{ borderRadius:"15px",backgroundColor:"white", color:"black",width:"80px"}}
-                >
-                  <MenuItem>TR</MenuItem>
-                  <MenuItem>ENG</MenuItem>
-                </TextField>
-              </FormControl>
-              <FormControlLabel
-                sx={{ marginLeft: "2rem" }}
-                control={<DarkMode sx={{ m: 1 }} defaultChecked />}
-              />
-            </FormGroup>
+            <TextField
+              id="outlined-select-currency"
+              select
+              size="small"
+              value={lang}
+              defaultValue={lang}
+              onChange={handleLangChange}
+              sx={{
+                borderRadius: "15px",
+                backgroundColor: "white",
+                color: "black",
+                width: "100px",
+              }}
+            >
+              <MenuItem value="TR">TR</MenuItem>
+              <MenuItem value="ENG">ENG</MenuItem>
+            </TextField>
+            <FormControlLabel
+              sx={{ marginLeft: "2rem" }}
+              control={<DarkMode sx={{ m: 1 }} defaultChecked />}
+            />
           </Box>
         </Toolbar>
       </Container>
