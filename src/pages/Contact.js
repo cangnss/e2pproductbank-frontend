@@ -14,7 +14,8 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { Marker } from "@react-google-maps/api";
-
+import contactPhoto from "../assets/images/billboard.jpg";
+import { color, display } from "@mui/system";
 
 
 const Contact = () => {
@@ -63,6 +64,10 @@ const Contact = () => {
 
   return (
     <div className="contact">
+   <div style={{position:"relative"}}>
+     <h2 style={{position:"absolute", color:"white", fontSize:"40px", marginLeft:"6rem"}}>İLETİŞİM</h2>
+     <img width="100%" height="200px" src={contactPhoto} alt="" />
+   </div>
       <Grid container spacing={3}>
         <Grid
           item

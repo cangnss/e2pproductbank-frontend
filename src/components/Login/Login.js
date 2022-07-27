@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Grid, TextField } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import "./Login.css";
-import loginPhoto from "../../images/networkConnection.jpg"
+import loginPhoto from "../../assets/images/networkConnection.jpg"
 
 const Login = () => {
   return (

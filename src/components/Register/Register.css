@@ -1,0 +1,12 @@
+.register{
+    display: block;
+    margin-top: 5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-radius: 15px;
+    height: 50vh;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* border: 1px solid black; */
+}

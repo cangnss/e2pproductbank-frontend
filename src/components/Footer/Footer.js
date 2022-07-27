@@ -1,4 +1,4 @@
-import footerLogo from "../../images/logo5.png";
+import footerLogo from "../../assets/images/logo5.png";
 import "./Footer.css";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";

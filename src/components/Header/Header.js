@@ -1,23 +1,40 @@
 import * as React from "react";
-import e2pLogo from "../../images/logo6.png";
+import e2pLogo from "../../assets/images/logo6.png";
 import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import "./Header.css";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  FormControlLabel,
+  FormGroup,
+  TextField,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import DarkMode from "./DarkMode";
 
-const pages = [{ name: "Products", path:"/"}, { name:"About", path:"about"}, { name:"Contact", path:"contact"}];
+const pages = [
+  { name: "Products", path: "/products" },
+  { name: "About", path: "about" },
+  { name: "Contact", path: "contact" },
+];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [lang, setLang] = React.useState(false);
 
+  const handleLangChange = (event) => {
+    setLang(event.target.value);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -27,8 +44,14 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static"  style={{ backgroundColor: 'rgb(2,153,173)',
-      background: 'linear-gradient(90deg, rgba(2,153,173,1) 0%, rgba(4,37,86,1) 70%, rgba(2,9,64,1) 100%)' }}>
+    <AppBar
+      position="static"
+      style={{
+        backgroundColor: "rgb(2,153,173)",
+        background:
+          "linear-gradient(90deg, rgba(2,153,173,1) 0%, rgba(4,37,86,1) 70%, rgba(2,9,64,1) 100%)",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
@@ -74,12 +97,23 @@ const Header = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link style={{ textDecoration: "none", color:"black"}} to={page.path}>{page.name}</Link></Typography>
+                  <Typography textAlign="center">
+                    <Link
+                      style={{ textDecoration: "none", color: "black" }}
+                      to={page.path}
+                    >
+                      {page.name}
+                    </Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} justifyContent="center" aligntItems="center">
+          <Box
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            justifyContent="center"
+            aligntItems="center"
+          >
             {pages.map((page) => (
               <Button
                 key={page.name}
@@ -91,15 +125,33 @@ const Header = () => {
                   display: "block",
                 }}
               >
-                <Link style={{ textDecoration:"none", color:"white" }} to={page.path}>{page.name}</Link>
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to={page.path}
+                >
+                  {page.name}
+                </Link>
               </Button>
             ))}
           </Box>
-          <Box sx={{ display: { xs: "flex" } , flexDirection: { xs: "column", md:"row", lg:"row", xl:"row" } }}>
+          <Box
+            sx={{
+              marginRight: "2rem",
+              display: { xs: "flex" },
+              flexDirection: { xs: "column", md: "row", lg: "row", xl: "row" },
+            }}
+          >
             <Button
               variant="contained"
               size="large"
-              sx={{ backgroundColor: "#F5BA84", marginRight: "1rem", marginTop:{xs:".5rem"}, width: { xs: "5rem" } , height: { xs:"2rem" }, fontSize: { xs: ".8rem"} }}
+              sx={{
+                backgroundColor: "#F5BA84",
+                marginRight: "1rem",
+                marginTop: { xs: ".5rem" },
+                width: { xs: "5rem" },
+                height: { xs: "2rem" },
+                fontSize: { xs: ".8rem" },
+              }}
             >
               <Link
                 to="/login"
@@ -112,7 +164,19 @@ const Header = () => {
                 Login
               </Link>
             </Button>
-            <Button variant="contained" size="large" sx={{ backgroundColor:"#F5BA84", color:"black", marginTop:{xs:".5rem"}, marginBottom:{xs:".5rem"} , width: { xs: "5rem" } , height: { xs:"2rem" }, fontSize: { xs: ".8rem"} }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "#F5BA84",
+                color: "black",
+                marginTop: { xs: ".5rem" },
+                marginBottom: { xs: ".5rem" },
+                width: { xs: "5rem" },
+                height: { xs: "2rem" },
+                fontSize: { xs: ".8rem" },
+              }}
+            >
               <Link
                 to="/register"
                 style={{
@@ -124,6 +188,27 @@ const Header = () => {
                 Register
               </Link>
             </Button>
+          </Box>
+          <Box>
+            <FormGroup sx={{ display: "flex", flexDirection: "row" }}>
+              <FormControl size="small">
+                <TextField
+                  id="outlined-select-currency"
+                  select
+                  size="small"
+                  value={lang}
+                  onChange={handleLangChange}
+                  sx={{ borderRadius:"15px",backgroundColor:"white", color:"black",width:"80px"}}
+                >
+                  <MenuItem>TR</MenuItem>
+                  <MenuItem>ENG</MenuItem>
+                </TextField>
+              </FormControl>
+              <FormControlLabel
+                sx={{ marginLeft: "2rem" }}
+                control={<DarkMode sx={{ m: 1 }} defaultChecked />}
+              />
+            </FormGroup>
           </Box>
         </Toolbar>
       </Container>
