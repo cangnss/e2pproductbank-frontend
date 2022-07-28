@@ -7,10 +7,11 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Page404 from "./pages/Page404";
-import Home from "./pages/Home";
 import Footer from "./components/Footer/Footer";
 import Products from "./components/Products/Products";
 import Sss from "./pages/Sss";
+import ProductDetail from "./components/Products/ProductDetail";
+import ProductLayout from "./components/Products";
 
 function App() {
   return (
@@ -18,11 +19,12 @@ function App() {
       <StyledEngineProvider injectFirst>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />}>
-            
+          <Route path="/" element={<Products />} />
+          <Route path="/products" element={<ProductLayout />}>
+            <Route index={true} element={<Products />} />
+            <Route path=':id' element={<ProductDetail />} />
           </Route>
-          <Route path="/SSS" element={<Sss />}/>
+          <Route path="/SSS" element={<Sss />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />

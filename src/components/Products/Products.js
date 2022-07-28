@@ -4,6 +4,7 @@ import Search from "../Search/Search";
 import Switch from "@mui/material/Switch";
 import { Stack, Typography } from "@mui/material";
 import ProductList from "./ProductList";
+import { Outlet } from "react-router-dom";
 
 const Products = () => {
   const [change, setChange] = useState(true);
@@ -28,6 +29,7 @@ const Products = () => {
         <Typography>Categories</Typography>
       </Stack>
       {change ? <ProductList /> : <Categories />}
+      <Outlet />
     </div>
   );
 };
