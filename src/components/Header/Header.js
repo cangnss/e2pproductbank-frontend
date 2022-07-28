@@ -26,6 +26,7 @@ const pages = [
   { name: "Products", path: "/products" },
   { name: "About", path: "about" },
   { name: "Contact", path: "contact" },
+  {name: "Sss", path: "sss"},
 ];
 
 const Header = () => {

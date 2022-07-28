@@ -10,6 +10,7 @@ import Page404 from "./pages/Page404";
 import Home from "./pages/Home";
 import Footer from "./components/Footer/Footer";
 import Products from "./components/Products/Products";
+import Sss from "./pages/Sss";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/products" element={<Products />}>
             
           </Route>
+          <Route path="/SSS" element={<Sss />}/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />

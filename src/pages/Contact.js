@@ -52,7 +52,6 @@ const Contact = () => {
     setDeclaration('')
     console.log(data);
   };
-  const google = window.google
   const defaultProps = {
     center: {
       lat: 39.86183,
@@ -243,21 +242,22 @@ const Contact = () => {
       )}
         </Grid>
       </Grid>
-
-      {/* <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBrJFGiiU_NHS6muUUQZeC35JNLhVXIDvw" }}
-          defaultCenter={defaultProps.center}
-          defaultZoom={defaultProps.zoom}
-        >
-          <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-          <Marker
-            icon="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-            key="1"
-            position={{ lat: 59.955413, lng: 30.337844 }}
-          />
-        </GoogleMapReact>
-      </div> */}
+        {/* <div>
+        <div style={{ height: "100vh", width: "100%" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "" }}
+            defaultCenter={defaultProps.center}
+            defaultZoom={defaultProps.zoom}
+          >
+            <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
+            <Marker
+              icon="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+              key="1"
+              position={{ lat: 59.955413, lng: 30.337844 }}
+            />
+          </GoogleMapReact>
+        </div>
+        </div> */}
     
     </div>
   );
