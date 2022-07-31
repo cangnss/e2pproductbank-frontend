@@ -49,12 +49,14 @@ const products = [
     productId: 6,
     productName: "Photoshop",
     productVendor: "Adobe",
-    productDescription:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt eaque assumenda quia sapiente cupiditate, iusto autem modi saepe porro ut velit, cum amet repellendus, rerum perferendis temporibus nemo accusantium veniam.",
-    productIcon: "icon.png"
+    productDescription:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt eaque assumenda quia sapiente cupiditate, iusto autem modi saepe porro ut velit, cum amet repellendus, rerum perferendis temporibus nemo accusantium veniam.",
+    productIcon: "icon.png",
   },
 ];
 
 export default function ProductList() {
+  const sessionType = 0;
   return (
     <Grid container display="flex" justifyContent="center" alignItems="center">
       <Grid item>
@@ -122,7 +124,11 @@ export default function ProductList() {
                       <Link
                         to={`/products/${product.productId}`}
                         key={product.productId}
-                        style={{ textDecoration: "none", color: "white", fontWeight:"bold" }}
+                        style={{
+                          textDecoration: "none",
+                          color: "white",
+                          fontWeight: "bold",
+                        }}
                       >
                         Product Detail
                       </Link>

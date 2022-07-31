@@ -12,6 +12,9 @@ import Products from "./components/Products/Products";
 import Sss from "./pages/Sss";
 import ProductDetail from "./components/Products/ProductDetail";
 import ProductLayout from "./components/Products";
+import Admin from "./components/Admin/Admin";
+import ProductUpdate from "./components/Admin/ProductUpdate";
+import AdminLayout from "./components/Admin/AdminLayout";
 
 function App() {
   return (
@@ -29,6 +32,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index={true} element={<Admin />} />
+            <Route path='/admin/update/:id' element={<ProductUpdate />}/>
+          </Route>
           <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />

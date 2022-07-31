@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Collapse,
+  Container,
   Divider,
   Grid,
   IconButton,
@@ -17,7 +18,8 @@ import { useParams } from "react-router-dom";
 import rastPhoto from "../../assets/images/logo5.png";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ProductComments from "./ProductComments";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -38,6 +40,20 @@ const products = [
     productVendor: "Ubuntu",
     productDescription: "Alican",
     productIcon: "icon.png",
+    comments: [
+      {
+        userId: "101",
+        comment: "Awesome product!",
+      },
+      {
+        userId: "102",
+        comment: "Nice!",
+      },
+      {
+        userId: "103",
+        comment: "I don't like it!",
+      },
+    ],
   },
   {
     productId: 2,
@@ -45,6 +61,20 @@ const products = [
     productVendor: "Linux",
     productDescription: "Dilek",
     productIcon: "icon.png",
+    comments: [
+      {
+        userId: "101",
+        comment: "Awesome product!",
+      },
+      {
+        userId: "102",
+        comment: "Nice!",
+      },
+      {
+        userId: "103",
+        comment: "I don't like it!",
+      },
+    ],
   },
   {
     productId: 3,
@@ -52,6 +82,20 @@ const products = [
     productVendor: "8GadgetPack",
     productDescription: "Cem",
     productIcon: "icon.png",
+    comments: [
+      {
+        userId: "101",
+        comment: "Awesome product!",
+      },
+      {
+        userId: "102",
+        comment: "Nice!",
+      },
+      {
+        userId: "103",
+        comment: "I don't like it!",
+      },
+    ],
   },
   {
     productId: 4,
@@ -88,10 +132,25 @@ const products = [
     productDescription:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt eaque assumenda quia sapiente cupiditate, iusto autem modi saepe porro ut velit, cum amet repellendus, rerum perferendis temporibus nemo accusantium veniam.",
     productIcon: "icon.png",
+    comments: [
+      {
+        userId: "101",
+        comment: "Awesome product!",
+      },
+      {
+        userId: "102",
+        comment: "Nice!",
+      },
+      {
+        userId: "103",
+        comment: "I don't like it!",
+      },
+    ],
   },
 ];
 
 export default function ProductDetail() {
+  const sessionType = 0;
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const params = useParams();
@@ -106,8 +165,7 @@ export default function ProductDetail() {
     }
   });
 
-  console.log(findedProduct);
-
+  console.log(findedProduct);     
   return (
     <>
       {findedProduct ? (
@@ -143,34 +201,51 @@ export default function ProductDetail() {
                     Product Description: {findedProduct.productDescription}
                   </Typography>
                 </Grid>
-                <Grid
-                  sx={{
-                    display: "flex",
-                    aligItems: "center",
-                    justifyContent: "center",
+                {sessionType === 0 ? (
+                <Button variant="contained">
+                <Link
+                  to={`/admin/update/${findedProduct.productId}`}
+                  key={findedProduct.productId}
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    fontWeight: "bold",
                   }}
-                  mb={5}
-                  item
                 >
-                  <Box sx={{ width: "30%" }}>
-                    <Button variant="contained" onClick={handleOpen}>
-                      Yorum Yap
-                    </Button>
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <ProductComments />
-                    </Modal>
-                  </Box>
-                  <Box mt={-1}>
-                    <IconButton sx={{ "&:focus": { color: "red" } }}>
-                      <FavoriteIcon fontSize="large" />
-                    </IconButton>
-                  </Box>
-                </Grid>
+                  Güncelle
+                </Link>
+              </Button>
+                ) : (
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      aligItems: "center",
+                      justifyContent: "center",
+                    }}
+                    mb={5}
+                    item
+                  >
+                    <Box sx={{ width: "30%" }}>
+                      <Button variant="contained" onClick={handleOpen}>
+                        Yorum Yap
+                      </Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <ProductComments />
+                      </Modal>
+                    </Box>
+                    <Box mt={-1}>
+                      <IconButton sx={{ "&:focus": { color: "red" } }}>
+                        <FavoriteIcon fontSize="large" />
+                      </IconButton>
+                    </Box>
+                  </Grid>
+                )}
+
                 <Grid item></Grid>
               </Grid>
             </Grid>
@@ -196,16 +271,24 @@ export default function ProductDetail() {
                 return (
                   <Grid item>
                     <Collapse in={expanded}>
-                      <Box sx={{ display: "flex", flexDirection: "row", justifyContent:"space-around" }}>
-                        <Box sx={{ width:"50%" }}>
+                      <div
+                        style={{
+                          marginBottom: "2rem",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
                           <Avatar>
                             <PersonIcon />
                           </Avatar>
                         </Box>
-                        <Box sx={{ width:"100%"}}>
+                        <Box>
+                          <h3>Anonymous Person</h3>
                           <p>{product.comment}</p>
                         </Box>
-                      </Box>
+                      </div>
                     </Collapse>
                   </Grid>
                 );
@@ -215,14 +298,7 @@ export default function ProductDetail() {
         </>
       ) : (
         <>
-          <Grid justifyContent="center" alignItems="center" mt={10} container>
-            <Grid item sx={{ width: "20rem" }}>
-              <Alert severity="error">
-                <AlertTitle>Error</AlertTitle>
-                There is no product<strong> check it out!</strong>
-              </Alert>
-            </Grid>
-          </Grid>
+          <p>No product</p>
         </>
       )}
     </>
