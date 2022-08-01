@@ -5,7 +5,7 @@ import Search from "../Search/Search";
 import Switch from "@mui/material/Switch";
 import { Stack, Typography } from "@mui/material";
 import ProductList from "./ProductList";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
@@ -61,7 +61,11 @@ const Products = () => {
         sx={{ marginBottom: "1rem" }}
       >
         <Grid item>
-          <Button variant="contained">Ürün Ekle</Button>
+          <Button variant="contained">
+            <Link to="/admin/addproduct" style={{ textDecoration:"none", color:"white", fontWeight:"bold" }}>
+              Ürün Ekle
+            </Link>
+          </Button>
         </Grid>
         <Grid item>
           <Button onClick={handleClickOpen}>Kategori Ekle</Button>

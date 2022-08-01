@@ -15,6 +15,7 @@ import ProductLayout from "./components/Products";
 import Admin from "./components/Admin/Admin";
 import ProductUpdate from "./components/Admin/ProductUpdate";
 import AdminLayout from "./components/Admin/AdminLayout";
+import AddProduct from "./components/Admin/AddProduct";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index={true} element={<Admin />} />
+            <Route path="/admin/addproduct" element={<AddProduct />} />
             <Route path='/admin/update/:id' element={<ProductUpdate />}/>
           </Route>
           <Route path="*" element={<Page404 />} />
