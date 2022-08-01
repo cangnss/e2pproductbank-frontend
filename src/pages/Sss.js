@@ -8,7 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Grid } from "@mui/material";
-import { style } from "@mui/system";
+import SssPhoto from "../assets/images/SssPhoto.jpg";
 
 // const styledButton = style(Button)`
 //     &:hover{
@@ -28,9 +28,15 @@ const Sss = () => {
       <div style={{ backgroundColor: "#84AABD", fontSize: "18px" }}>
         <h2>SIKÇA SORULAN SORULAR</h2>
       </div>
-      <Grid spacing={6}>
+
+      <Grid container spacing={6} direction="column">
+        <Grid item lg={10} xl={10}>
+          <img width="50%" height="100px" src={SssPhoto} alt="" />
+        </Grid>
         <Grid
+          xl={6}
           item
+          container
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -68,10 +74,15 @@ const Sss = () => {
             ></CardHeader>
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open1} timeout="auto" unmountOnExit>
-                <CardContent sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}>
+                <CardContent
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
+                >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -124,10 +135,15 @@ const Sss = () => {
             ></CardHeader>
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open2} timeout="auto" unmountOnExit>
-                <CardContent sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}>
+                <CardContent
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
+                >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -181,10 +197,13 @@ const Sss = () => {
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open3} timeout="auto" unmountOnExit>
                 <CardContent
-                  sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
                 >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
@@ -237,10 +256,15 @@ const Sss = () => {
             ></CardHeader>
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open4} timeout="auto" unmountOnExit>
-                <CardContent sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}>
+                <CardContent
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
+                >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -292,10 +316,15 @@ const Sss = () => {
             ></CardHeader>
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open5} timeout="auto" unmountOnExit>
-                <CardContent sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}>
+                <CardContent
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
+                >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -347,10 +376,15 @@ const Sss = () => {
             ></CardHeader>
             <div style={{ backgroundColor: "rgba(211,211,211,0.4)" }}>
               <Collapse in={open6} timeout="auto" unmountOnExit>
-                <CardContent sx={{ backgroundColor: "white", border:"solid",
-                  borderRightStyle: "none",
-                  borderBottomStyle:" none",
-                  borderLeftStyle: "none" }}>
+                <CardContent
+                  sx={{
+                    backgroundColor: "white",
+                    border: "solid",
+                    borderRightStyle: "none",
+                    borderBottomStyle: " none",
+                    borderLeftStyle: "none",
+                  }}
+                >
                   <Container sx={{ height: 36, lineHeight: 2 }}>
                     {" "}
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -363,7 +397,6 @@ const Sss = () => {
             </div>
           </Card>
         </Grid>
-
       </Grid>
     </>
   );
