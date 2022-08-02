@@ -54,7 +54,6 @@ const Products = () => {
       <Grid
         container
         spacing={2}
-        ontainer
         direction="row"
         justifyContent="center"
         alignItems="center"
@@ -73,7 +72,7 @@ const Products = () => {
             <DialogTitle>Kategori Giriniz</DialogTitle>
             <DialogContent>
               <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-                <FormControl variant="standart" sx={{ m: 1, minWidth: 120 }}>
+                <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
                   <TextField id="outlined" label="Category" />
                 </FormControl>
               </Box>

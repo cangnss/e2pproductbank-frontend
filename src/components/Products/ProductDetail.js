@@ -268,7 +268,9 @@ export default function ProductDetail() {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
-                        <AddComment />
+                        <div>
+                          <AddComment />
+                        </div>
                       </Modal>
                     </Box>
                     <Box mt={-1}>
