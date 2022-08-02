@@ -164,7 +164,7 @@ const products = [
 ];
 
 export default function ProductDetail() {
-  const sessionType = 1;
+  const sessionType = 0;
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const params = useParams();
@@ -199,7 +199,7 @@ export default function ProductDetail() {
                   <img src={rastPhoto} alt="" width="100%" height="50%" />
                 </Box>
               </Grid>
-              <Grid item xl={6} sx={{ textAlign: "left" }}>
+              <Grid item xl={6} sx={{ textAlign: "left" }} key={findedProduct.productId}>
                 <Grid mb={5} mt={5} item>
                   <Typography variant="h5" component="h6">
                     Product Name: {findedProduct.productName}

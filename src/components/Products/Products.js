@@ -62,14 +62,14 @@ const Products = () => {
         <Grid item>
           <Button variant="contained">
             <Link to="/admin/addproduct" style={{ textDecoration:"none", color:"white", fontWeight:"bold" }}>
-              Ürün Ekle
+              Add Product
             </Link>
           </Button>
         </Grid>
         <Grid item>
-          <Button onClick={handleClickOpen}>Kategori Ekle</Button>
+          <Button onClick={handleClickOpen}>Add Category</Button>
           <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
-            <DialogTitle>Kategori Giriniz</DialogTitle>
+            <DialogTitle>Enter a Category</DialogTitle>
             <DialogContent>
               <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
                 <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
@@ -78,8 +78,8 @@ const Products = () => {
               </Box>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>İptal</Button>
-              <Button onClick={handleClose}>Ekle</Button>
+              <Button onClick={handleClose}>Close</Button>
+              <Button onClick={handleClose}>Add</Button>
             </DialogActions>
           </Dialog>
         </Grid>
