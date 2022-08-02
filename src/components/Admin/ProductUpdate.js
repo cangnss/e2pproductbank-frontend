@@ -1,110 +1,105 @@
-import { Paper, Grid } from "@mui/material";
+import {
+  Paper,
+  Grid,
+  FormControl,
+  Box,
+  Select,
+  MenuItem,
+  Input,
+  Typography,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { useState } from "react";
 
 const ProductUpdate = () => {
+  const [category, setCategory] = useState("");
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
+
   return (
     <>
       <Paper
         elevation={3}
         style={{ width: "50%", margin: "auto", padding: "5rem" }}
       >
-        <Grid container>
-          <Grid
-            container
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            direction="row"
-            spacing={10}
-          >
-            <Grid item display="flex" direction="row">
-              <InputLabel
-                sx={{
-                  marginRight: "1rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                Ürün Adı:
-              </InputLabel>
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-            </Grid>
-            <Grid item display="flex" direction="row">
-              <InputLabel
-                sx={{
-                  marginRight: "1rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                Satıcı Güncelle:
-              </InputLabel>
-              <TextField id="outlined-basic" variant="outlined" size="small" />
-            </Grid>
+        <Grid container display="flex" direction="column" justifyContent="center"
+            alignItems="center">
+          <Grid item mb={5}>
+            <Typography variant="h4" gutterBottom component="div">
+              Update Product
+            </Typography>
           </Grid>
-          <Grid
-            container
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            direction="row"
-            spacing={10}
-          >
-            <Grid item display="flex" direction="row">
-              <InputLabel
-                sx={{
-                  marginRight: "1rem",
-                  marginTop: "2rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+          <Grid item>
+            <Box mb={2}>
+              <FormControl fullWidth>
+                <TextField
+                  id="productName"
+                  name="productName"
+                  placeholder="Product Name"
+                />
+              </FormControl>
+            </Box>
+            <Box mb={2}>
+              <FormControl fullWidth>
+                <TextField
+                  id="productVendor"
+                  name="productVendor"
+                  placeholder="Product Vendor"
+                />
+              </FormControl>
+            </Box>
+            <Box mb={2}>
+              <FormControl fullWidth>
+                <TextField
+                  id="productDescription"
+                  name="productDescription"
+                  multiline
+                  rows={4}
+                  maxRows={10}
+                  placeholder="Product Description"
+                />
+              </FormControl>
+            </Box>
+            <Box mb={2}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Category"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Browser">Browser</MenuItem>
+                  <MenuItem value="Android">Android</MenuItem>
+                  <MenuItem value="Photo">Photo</MenuItem>
+                  <MenuItem value="Draw">Draw</MenuItem>
+                  <MenuItem value="Antivirus">Antivirus</MenuItem>
+                  <MenuItem value="Cloud">Cloud</MenuItem>
+                  <MenuItem value="File">File</MenuItem>
+                  <MenuItem value="Password">Password</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box mb={2}>
+              <FormControl>
+                <Input id="productImage" type="file" disableUnderline={true} />
+              </FormControl>
+            </Box>
+            <Box>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                sx={{ fontWeight: "bold" }}
               >
-                Ürün Açıklaması:
-              </InputLabel>
-              <TextareaAutosize
-                maxRows={4}
-                aria-label="maximum height"
-                placeholder="Maximum 4 rows"
-                style={{ marginTop: "2rem", width: 200 }}
-              />
-            </Grid>
-            <Grid item display="flex" direction="row">
-              <InputLabel
-                sx={{
-                  marginRight: "1rem",
-                  marginTop: "2rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                Fotoğraf Güncelle:
-              </InputLabel>
-              <Button variant="contained" component="label" sx={{ marginTop: "2rem" }}>
-               Yükle
-                <input type="file" hidden />
+                Update Product
               </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="center"
-            direction="row"
-            spacing={10}
-          >
-            <Grid item display="flex" direction="row">
-              <Button variant="contained" sx={{ marginTop: "2rem" }}>
-                Kaydet
-              </Button>
-            </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Paper>

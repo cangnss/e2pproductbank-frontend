@@ -150,7 +150,7 @@ const products = [
 ];
 
 export default function ProductDetail() {
-  const sessionType = 0;
+  const sessionType = 1;
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const params = useParams();
@@ -165,7 +165,7 @@ export default function ProductDetail() {
     }
   });
 
-  console.log(findedProduct);     
+  console.log(findedProduct);
   return (
     <>
       {findedProduct ? (
@@ -202,19 +202,38 @@ export default function ProductDetail() {
                   </Typography>
                 </Grid>
                 {sessionType === 0 ? (
-                <Button variant="contained">
-                <Link
-                  to={`/admin/update/${findedProduct.productId}`}
-                  key={findedProduct.productId}
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Güncelle
-                </Link>
-              </Button>
+                  <Grid item mb={10} display="flex" direction="row">
+                    <Box>
+                      <Button variant="contained">
+                        <Link
+                          to={`/admin/update/${findedProduct.productId}`}
+                          key={findedProduct.productId}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Update
+                        </Link>
+                      </Button>
+                    </Box>
+                    <Box ml={5}>
+                      <Button variant="contained" color="error">
+                        <Link
+                          to={`/admin/delete/${findedProduct.productId}`}
+                          key={findedProduct.productId}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Delete
+                        </Link>
+                      </Button>
+                    </Box>
+                  </Grid>
                 ) : (
                   <Grid
                     sx={{
@@ -225,9 +244,9 @@ export default function ProductDetail() {
                     mb={5}
                     item
                   >
-                    <Box sx={{ width: "30%" }}>
+                    <Box sx={{ width: "50%" }}>
                       <Button variant="contained" onClick={handleOpen}>
-                        Yorum Yap
+                        Send Comment
                       </Button>
                       <Modal
                         open={open}
@@ -264,7 +283,7 @@ export default function ProductDetail() {
                     setExpanded(!expanded);
                   }}
                 >
-                  Yorumlar
+                  Comments
                 </Button>
               </Grid>
               {findedProduct?.comments.map((product) => {
