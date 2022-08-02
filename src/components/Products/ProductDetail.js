@@ -17,9 +17,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import rastPhoto from "../../assets/images/logo5.png";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ProductComments from "./ProductComments";
-import PersonIcon from "@mui/icons-material/Person";
 import { Link } from "react-router-dom";
+import AddComment from "../Comments/AddComment";
+import Comments from "../Comments/Comments";
 
 const style = {
   position: "absolute",
@@ -124,6 +124,20 @@ const products = [
     productVendor: "AbleWorld",
     productDescription: "Ceren",
     productIcon: "icon.png",
+    comments: [
+      {
+        userId: "101",
+        comment: "Awesome product!",
+      },
+      {
+        userId: "102",
+        comment: "Nice!",
+      },
+      {
+        userId: "103",
+        comment: "I don't like it!",
+      },
+    ],
   },
   {
     productId: 6,
@@ -254,7 +268,7 @@ export default function ProductDetail() {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
-                        <ProductComments />
+                        <AddComment />
                       </Modal>
                     </Box>
                     <Box mt={-1}>
@@ -286,32 +300,11 @@ export default function ProductDetail() {
                   Comments
                 </Button>
               </Grid>
-              {findedProduct?.comments.map((product) => {
-                return (
-                  <Grid item>
-                    <Collapse in={expanded}>
-                      <div
-                        style={{
-                          marginBottom: "2rem",
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Avatar>
-                            <PersonIcon />
-                          </Avatar>
-                        </Box>
-                        <Box>
-                          <h3>Anonymous Person</h3>
-                          <p>{product.comment}</p>
-                        </Box>
-                      </div>
-                    </Collapse>
-                  </Grid>
-                );
-              })}
+              <Grid item>
+                <Collapse in={expanded}>
+                    <Comments comments={findedProduct?.comments} />
+                </Collapse>
+              </Grid>
             </Grid>
           </Paper>
         </>

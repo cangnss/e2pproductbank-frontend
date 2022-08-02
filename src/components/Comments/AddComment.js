@@ -13,7 +13,7 @@ const style = {
   p: 4,
 };
 
-export default function ProductComments() {
+export default function AddComment() {
   return (
     <Box sx={style}>
       <Grid>
