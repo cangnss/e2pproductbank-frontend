@@ -20,22 +20,23 @@ import {
   TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import DarkMode from "./DarkMode";
+import SwitchLanguage from "./SwitchLanguage"
+import { useAuth } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 const pages = [
   { name: "Products", path: "/products" },
   { name: "About", path: "about" },
   { name: "Contact", path: "contact" },
-  {name: "Sss", path: "sss"},
+  { name: "Sss", path: "sss" },
 ];
 
 const Header = () => {
+  const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [lang, setLang] = React.useState(false);
-
-  const handleLangChange = (event) => {
-    setLang(event.target.value);
-  };
+  const user = localStorage.getItem("user")
+  const { dispatch } = useAuth();
+ 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -43,10 +44,22 @@ const Header = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutHandler = () => {
+    dispatch({ type:"LOGOUT" })
+    navigate("/login")
+  }
 
   return (
     <AppBar
-      position="static"
       style={{
         backgroundColor: "rgb(2,153,173)",
         background:
@@ -54,7 +67,19 @@ const Header = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "row",
+              lg: "row",
+              xl: "row",
+            },
+          }}
+        >
           <Box
             component="img"
             sx={{
@@ -142,76 +167,99 @@ const Header = () => {
               flexDirection: { xs: "column", md: "row", lg: "row", xl: "row" },
             }}
           >
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: "#F5BA84",
-                marginRight: "1rem",
-                marginTop: { xs: ".5rem" },
-                width: { xs: "5rem" },
-                height: { xs: "2rem" },
-                fontSize: { xs: ".8rem" },
-              }}
-            >
-              <Link
-                to="/login"
-                style={{
-                  color: "white",
-                  fontWeight: "bold",
-                  textDecoration: "none",
+            <React.Fragment>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
                 }}
               >
-                Login
-              </Link>
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: "#F5BA84",
-                color: "black",
-                marginTop: { xs: ".5rem" },
-                marginBottom: { xs: ".5rem" },
-                width: { xs: "5rem" },
-                height: { xs: "2rem" },
-                fontSize: { xs: ".8rem" },
-              }}
-            >
-              <Link
-                to="/register"
-                style={{
-                  color: "white",
-                  fontWeight: "bold",
-                  textDecoration: "none",
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ color: "white", ml: 2 }}
+                  aria-controls={open ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
+                  <MenuIcon></MenuIcon>
+                </IconButton>
+              </Box>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
                 }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                Register
-              </Link>
-            </Button>
+                {(user && (
+                  <MenuItem>
+                    <Button onClick={logoutHandler}>
+                      <Link to="/logout" style={{ textDecoration:"none", color:"black", fontWeight:"bold"}}>Çıkış Yap</Link>
+                    </Button>
+                  </MenuItem>
+                )) || (
+                  <>
+                    <MenuItem>
+                      <Link
+                        to="/login"
+                        style={{
+                          color: "black",
+                          fontWeight: "bold",
+                          textDecoration: "none",
+                        }}
+                      >
+                        Login
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link
+                        to="/register"
+                        style={{
+                          color: "black",
+                          fontWeight: "bold",
+                          textDecoration: "none",
+                        }}
+                      >
+                        Register
+                      </Link>
+                    </MenuItem>
+                  </>
+                )}
+              </Menu>
+            </React.Fragment>
           </Box>
           <Box>
-            <TextField
-              id="outlined-select-currency"
-              select
-              size="small"
-              value={lang}
-              defaultValue={lang}
-              onChange={handleLangChange}
-              sx={{
-                borderRadius: "15px",
-                backgroundColor: "white",
-                color: "black",
-                width: "100px",
-              }}
-            >
-              <MenuItem value="TR">TR</MenuItem>
-              <MenuItem value="ENG">ENG</MenuItem>
-            </TextField>
-            <FormControlLabel
-              sx={{ marginLeft: "2rem" }}
-              control={<DarkMode sx={{ m: 1 }} defaultChecked />}
-            />
+            <SwitchLanguage />
           </Box>
         </Toolbar>
       </Container>

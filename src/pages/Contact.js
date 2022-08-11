@@ -258,6 +258,7 @@ const Contact = () => {
           </GoogleMapReact>
         </div>
         </div> */}
+        
     
     </div>
   );

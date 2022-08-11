@@ -12,20 +12,60 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
 
 export default function AddProduct() {
-  const [category, setCategory] = useState("");
-  const handleChange = (event) => {
-    setCategory(event.target.value);
+
+  const [productName, setProductName] = useState();
+  const [productVendor, setProductVendor] = useState();
+  const [productDescription, setProductDescription] = useState();
+  const [imageFile, setImageFile] = useState(null);
+  const [productCategory, setProductCategory] = useState("");
+
+  const deneme = (e) => {
+    var selectedfile = e.target.files;
+    if (selectedfile.length > 0) {
+      var imageFile = selectedfile[0];
+      var fileReader = new FileReader();
+      fileReader.onload = function (fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result;
+        setImageFile(srcData);
+      };
+      fileReader.readAsDataURL(imageFile);
+    }
+    setImageFile(imageFile);
   };
+  console.log("imageFile:", imageFile);
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("ProductName", productName);
+    formData.append("ProductVendor", productVendor);
+    formData.append("ProductDescription", productDescription);
+    formData.append("ProductImage", imageFile);
+    formData.append("CategoryId", productCategory);
+    const response = await axios({
+      method: "POST",
+      url: "https://localhost:7182/api/Products/addproduct",
+      data: formData,
+      headers:{
+        "Content-Type":"multipart/form-data"
+      }
+    });
+    console.log(response)
+  };
+
   return (
     <div>
       <Paper
         elevation={8}
         sx={{ width: "50%", margin: "auto", padding: "2rem" }}
       >
-        <form action="">
+        <form onSubmit={submitHandler} encType="multipart/form-data">
           <Grid
             container
             direction="column"
@@ -44,6 +84,9 @@ export default function AddProduct() {
                     id="productName"
                     name="productName"
                     placeholder="Product Name"
+                    onChange={(e) => {
+                      setProductName(e.target.value);
+                    }}
                   />
                 </FormControl>
               </Box>
@@ -53,6 +96,9 @@ export default function AddProduct() {
                     id="productVendor"
                     name="productVendor"
                     placeholder="Product Vendor"
+                    onChange={(e) => {
+                      setProductVendor(e.target.value);
+                    }}
                   />
                 </FormControl>
               </Box>
@@ -65,6 +111,9 @@ export default function AddProduct() {
                     rows={4}
                     maxRows={10}
                     placeholder="Product Description"
+                    onChange={(e) => {
+                      setProductDescription(e.target.value);
+                    }}
                   />
                 </FormControl>
               </Box>
@@ -75,29 +124,45 @@ export default function AddProduct() {
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={category}
+                    id="productCategory"
+                    name="productCategory"
                     label="Category"
-                    onChange={handleChange}
+                    value={productCategory}
+                    onChange={(e) => {
+                      setProductCategory(e.target.value);
+                    }}
                   >
-                    <MenuItem value="Browser">Browser</MenuItem>
-                    <MenuItem value="Android">Android</MenuItem>
-                    <MenuItem value="Photo">Photo</MenuItem>
-                    <MenuItem value="Draw">Draw</MenuItem>
-                    <MenuItem value="Antivirus">Antivirus</MenuItem>
-                    <MenuItem value="Cloud">Cloud</MenuItem>
-                    <MenuItem value="File">File</MenuItem>
-                    <MenuItem value="Password">Password</MenuItem>
+                    <MenuItem value="1">Browser</MenuItem>
+                    <MenuItem value="2">Android</MenuItem>
+                    <MenuItem value="3">Draw</MenuItem>
+                    <MenuItem value="4">Cloud</MenuItem>
+                    <MenuItem value="5">Password</MenuItem>
+                    <MenuItem value="6">Antivirus</MenuItem>
+                    <MenuItem value="7">File</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
               <Box mb={2}>
                 <FormControl>
-                  <Input id="productImage" type="file" disableUnderline={true} />
+                  <Input
+                    type="file"
+                    accept=".png, .jpg, .jpeg"
+                    onChange={(e) => {
+                      deneme(e);
+                    }}
+                    id="imageInput"
+                  />
                 </FormControl>
               </Box>
               <Box>
-                <Button type="submit" variant="contained" size="large" sx={{ fontWeight:"bold"}}>Add Product</Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  Add Product
+                </Button>
               </Box>
             </Grid>
           </Grid>

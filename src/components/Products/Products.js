@@ -1,39 +1,41 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Categories from "../Categories/Categories";
 import Search from "../Search/Search";
 import Switch from "@mui/material/Switch";
-import { Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import ProductList from "./ProductList";
 import { Link, Outlet } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
+import { useProducts } from "../../context";
 
 const Products = () => {
-  const sessionType = 0;
+  const user = localStorage.getItem("user") || null
+  const isUser = user?.status //true
   const [change, setChange] = useState(true);
-  const [open, setOpen] = React.useState(false);
+  const { loading, dispatch } = useProducts();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  useEffect(()=>{
+    getProducts()
+  }, [])
 
-  const handleClose = (event, reason) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
-    }
-  };
+  const getProducts = async () => {
+    dispatch({ type:'FETCH_START' })
+    await axios.get("https://localhost:7182/api/Products/getall")
+               .then((res)=>{
+                dispatch({ type:'FETCH_SUCCESS', payload: res.data.data })
+               })
+               .catch((err)=>{
+                dispatch({ type:'FETCH_FAILED', error:'ERROR!!!'})
+               })
+  }
 
   return (
     <div>
       <Search />
+
       <Stack
         direction="row"
         spacing={1}
@@ -50,42 +52,46 @@ const Products = () => {
         />
         <Typography>Categories</Typography>
       </Stack>
-      {sessionType === 0 ?  (
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ marginBottom: "1rem" }}
-      >
-        <Grid item>
-          <Button variant="contained">
-            <Link to="/admin/addproduct" style={{ textDecoration:"none", color:"white", fontWeight:"bold" }}>
-              Add Product
-            </Link>
-          </Button>
+      {isUser ? (
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ marginBottom: "1rem" }}
+        >
+          <Grid item>
+            <Button variant="contained">
+              <Link
+                to="/admin/addproduct"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                Add Product
+              </Link>
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained">
+              <Link
+                to="/admin/addcategory"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                Add Category
+              </Link>
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button onClick={handleClickOpen}>Add Category</Button>
-          <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
-            <DialogTitle>Enter a Category</DialogTitle>
-            <DialogContent>
-              <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-                <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
-                  <TextField id="outlined" label="Category" />
-                </FormControl>
-              </Box>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button onClick={handleClose}>Add</Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-      </Grid>
-      ) : (null)}
-
+      ) : null}
+      {loading && <CircularProgress />}
       {change ? <ProductList /> : <Categories />}
       <Outlet />
     </div>

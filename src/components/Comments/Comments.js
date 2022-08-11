@@ -22,7 +22,7 @@ export default function Comments(props) {
             </Box>
             <Box>
               <h3>Anonymous Person</h3>
-              <p>{product.comment}</p>
+              <p>{product.commentText}</p>
             </Box>
           </div>
         );

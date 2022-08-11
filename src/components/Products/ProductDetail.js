@@ -13,13 +13,14 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import rastPhoto from "../../assets/images/logo5.png";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import AddComment from "../Comments/AddComment";
 import Comments from "../Comments/Comments";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -33,156 +34,48 @@ const style = {
   p: 4,
 };
 
-const products = [
-  {
-    productId: 1,
-    productName: "3D XML Player(x64)",
-    productVendor: "Ubuntu",
-    productDescription: "Alican",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-  {
-    productId: 2,
-    productName: "7zip",
-    productVendor: "Linux",
-    productDescription: "Dilek",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-  {
-    productId: 3,
-    productName: "8GadgetPack",
-    productVendor: "8GadgetPack",
-    productDescription: "Cem",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-  {
-    productId: 4,
-    productName: "8x8 - Virtual Office",
-    productVendor: "8x8",
-    productDescription: "Ceren",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-  {
-    productId: 5,
-    productName: "AbleWorld",
-    productVendor: "AbleWorld",
-    productDescription: "Ceren",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-  {
-    productId: 6,
-    productName: "Photoshop",
-    productVendor: "Adobe",
-    productDescription:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt eaque assumenda quia sapiente cupiditate, iusto autem modi saepe porro ut velit, cum amet repellendus, rerum perferendis temporibus nemo accusantium veniam.",
-    productIcon: "icon.png",
-    comments: [
-      {
-        userId: "101",
-        comment: "Awesome product!",
-      },
-      {
-        userId: "102",
-        comment: "Nice!",
-      },
-      {
-        userId: "103",
-        comment: "I don't like it!",
-      },
-    ],
-  },
-];
-
 export default function ProductDetail() {
-  const sessionType = 0;
+  const user = localStorage.getItem("user") || null;
+  const isUser = user?.status; //true
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [comments, setComments] = useState();
+  const [details, setDetails] = useState();
   const params = useParams();
-  const id = params.id;
+  const productId = params.id;
 
+  useEffect(() => {
+    getProduct(productId);
+    getComments(productId);
+  }, []);
+
+  const getProduct = async (productId) => {
+    await axios
+      .get(`https://localhost:7182/api/Products/${productId}`)
+      .then((res) => {
+        console.log(res);
+        setDetails(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(details);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const findedProduct = products.find((product) => {
-    if (product.productId == id) {
-      return product;
-    }
-  });
+  const getComments = async (productId) => {
+    await axios
+      .get(`https://localhost:7182/api/Comments/product/${productId}`)
+      .then((res) => {
+        console.log(res);
+        setComments(res.data.data);
+      });
+  };
 
-  console.log(findedProduct);
   return (
     <>
-      {findedProduct ? (
+      {details && comments ? (
         <>
           <Paper elevation={3} style={{ width: "50%", margin: "auto" }}>
             <Grid container mt={10} direction="row">
@@ -196,59 +89,26 @@ export default function ProductDetail() {
                   }}
                   mx="auto"
                 >
-                  <img src={rastPhoto} alt="" width="100%" height="50%" />
+                  {/* <img src={rastPhoto} alt="" width="100%" height="50%" /> */}
                 </Box>
               </Grid>
-              <Grid item xl={6} sx={{ textAlign: "left" }} key={findedProduct.productId}>
+              <Grid item xl={6} sx={{ textAlign: "left" }} key={details?.id}>
                 <Grid mb={5} mt={5} item>
                   <Typography variant="h5" component="h6">
-                    Product Name: {findedProduct.productName}
+                    Product Name: {details?.productName}
                   </Typography>
                 </Grid>
                 <Grid mb={5} item>
                   <Typography variant="h5" component="h6">
-                    Product Vendor: {findedProduct.productVendor}
+                    Product Vendor: {details?.productVendor}
                   </Typography>
                 </Grid>
                 <Grid mb={5} item>
                   <Typography variant="h5" component="h6">
-                    Product Description: {findedProduct.productDescription}
+                    Product Description: {details?.productDescription}
                   </Typography>
                 </Grid>
-                {sessionType === 0 ? (
-                  <Grid item mb={10} display="flex" direction="row">
-                    <Box>
-                      <Button variant="contained">
-                        <Link
-                          to={`/admin/update/${findedProduct.productId}`}
-                          key={findedProduct.productId}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Update
-                        </Link>
-                      </Button>
-                    </Box>
-                    <Box ml={5}>
-                      <Button variant="contained" color="error">
-                        <Link
-                          to={`/admin/delete/${findedProduct.productId}`}
-                          key={findedProduct.productId}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Delete
-                        </Link>
-                      </Button>
-                    </Box>
-                  </Grid>
-                ) : (
+                {isUser ? (
                   <Grid
                     sx={{
                       display: "flex",
@@ -269,7 +129,7 @@ export default function ProductDetail() {
                         aria-describedby="modal-modal-description"
                       >
                         <div>
-                          <AddComment />
+                          <AddComment productId={details?.id} userId="1" />
                         </div>
                       </Modal>
                     </Box>
@@ -277,6 +137,39 @@ export default function ProductDetail() {
                       <IconButton sx={{ "&:focus": { color: "red" } }}>
                         <FavoriteIcon fontSize="large" />
                       </IconButton>
+                    </Box>
+                  </Grid>
+                ) : (
+                  <Grid item mb={10} display="flex" direction="row">
+                    <Box>
+                      <Button variant="contained">
+                        <Link
+                          to={`/admin/update/${details.id}`}
+                          key={details?.id}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Update
+                        </Link>
+                      </Button>
+                    </Box>
+                    <Box ml={5}>
+                      <Button variant="contained" color="error">
+                        <Link
+                          to={`/admin/delete/${details?.id}`}
+                          key={details?.id}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Delete
+                        </Link>
+                      </Button>
                     </Box>
                   </Grid>
                 )}
@@ -304,7 +197,7 @@ export default function ProductDetail() {
               </Grid>
               <Grid item>
                 <Collapse in={expanded}>
-                    <Comments comments={findedProduct?.comments} />
+                  <Comments comments={comments} />
                 </Collapse>
               </Grid>
             </Grid>

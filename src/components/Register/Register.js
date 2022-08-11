@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, Grid, TextField, FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { Box, Button, Grid, TextField, FormControl, InputLabel, OutlinedInput, Alert } from "@mui/material";
 import "./Register.css";
 import registerPhoto from "../../assets/images/23322.jpg"
 import InputAdornment from "@mui/material/InputAdornment";
@@ -9,8 +9,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import axios from "axios"
 
-const currencies = [
+
+const countries = [
   {
     value: "Turkey",
   },
@@ -26,37 +28,52 @@ const currencies = [
 ];
 
 const Register = () => {
-  const [currency, setCurrency] = React.useState("Turkey");
+  const [notify, setNotitfy] = React.useState({ message: '', status: 0, visible:false })
+  const [firstname, setFirstname] = React.useState('');
+  const [lastname, setLastname] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [country, setCountry] = React.useState("Turkey");
+  const [status, setStatus] = React.useState(false)
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const firstnameHandler = (e) => {
+    setFirstname(e.target.value)
+  }
+  const lastnameHandler = (e) => {
+    setLastname(e.target.value)
+  }
+  const emailHandler = (e) => {
+    setEmail(e.target.value)
+  }
+  const passwordHandler = (e) => {
+    setPassword(e.target.value)
+  }
+  const usernameHandler = (e) => {
+    setUsername(e.target.value)
+  }
+  const phoneHandler = (e) => {
+    setPhone(e.target.value)
+  }
+  const handleCountryChange = (event) => {
+    setCountry(event.target.value);
   };
 
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
-
-  const handlePasswordChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
+  const registerHandler = async (event) =>{
     event.preventDefault();
-  };
+
+    const response = await axios.post("https://localhost:7182/api/Auth/register", { firstname, lastname, email, password, username, country, phone, status })
+    console.log(response)
+    if(response?.data.success)
+      setNotitfy({ message: response?.data.message, status: 200, visible:true })
+  }
 
   return (
     <div className="register">
+      {notify.visible && notify.status === 200 ? (
+        <Alert severity="success">{notify.message}</Alert>
+      ) : (null)}
       <Grid container spacing={2}>
         <Grid
           item
@@ -86,7 +103,7 @@ const Register = () => {
             justifyContent: "center",
           }}
         >
-          <form method="post">
+          <form method="post" onSubmit={registerHandler}>
             <Grid
               item
               sx={{
@@ -105,6 +122,8 @@ const Register = () => {
                 <TextField
                   id="outlined-basic"
                   label="First Name"
+                  name="firstname"
+                  onChange={firstnameHandler}
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -119,6 +138,8 @@ const Register = () => {
                 <TextField
                   id="outlined-basic"
                   label="Last Name"
+                  name="lastname"
+                  onChange={lastnameHandler}
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -148,6 +169,8 @@ const Register = () => {
                 <TextField
                   id="outlined-basic"
                   label="E-mail"
+                  name="email"
+                  onChange={emailHandler}
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -165,28 +188,61 @@ const Register = () => {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
-                    type={values.showPassword ? "text" : "password"}
-                    value={values.password}
-                    onChange={handlePasswordChange("password")}
-                    endAdornment={
-                      <InputAdornment>
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="start"
-                        >
-                          {values.showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
+                    // type={values.showPassword ? "text" : "password"}
+                    // value={values.password}
+                    onChange={passwordHandler}
+                    name="password"
+                    // endAdornment={
+                    //   <InputAdornment>
+                    //     <IconButton
+                    //       aria-label="toggle password visibility"
+                    //       onClick={handleClickShowPassword}
+                    //       onMouseDown={handleMouseDownPassword}
+                    //       edge="start"
+                    //     >
+                    //       {values.showPassword ? (
+                    //         <VisibilityOff />
+                    //       ) : (
+                    //         <Visibility />
+                    //       )}
+                    //     </IconButton>
+                    //   </InputAdornment>
+                    // }
                     label="Password"
                   />
                 </FormControl>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                marginBottom: ".5rem",
+              }}
+            >
+              <Box
+                sx={{
+                  marginLeft: { xs: ".8rem" },
+                  marginRight: { xs: ".8rem" },
+                  marginBottom:{xs:".8rem"}
+                }}
+                
+              >
+                <TextField
+                  id="outlined-basic"
+                  label="Username"
+                  name="username"
+                  onChange={usernameHandler}
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </Box>
             </Grid>
             <Grid
@@ -207,6 +263,8 @@ const Register = () => {
                 <TextField
                   id="outlined-basic"
                   label="Phone Number"
+                  name="phone"
+                  onChange={phoneHandler}
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -223,14 +281,15 @@ const Register = () => {
                   select
                   sx={{ width:"255px"}}
                   label="Country"
-                  value={currency}
-                  onChange={handleChange}
+                  name="country"
+                  value={country}
+                  onChange={handleCountryChange}
                   SelectProps={{
                     native: true,
                   }}
                   
                 >
-                  {currencies.map((option) => (
+                  {countries.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.value}
                     </option>
@@ -238,8 +297,9 @@ const Register = () => {
                 </TextField>
               </Box>
             </Grid>
+            <input type="hidden" value="false" name="status" onChange={()=> { setStatus(false)}} />
             <Grid item sx={{ marginBottom: ".8rem" }}>
-              <Button variant="contained">REGISTER</Button>
+              <Button variant="contained" type="submit">REGISTER</Button>
             </Grid>
           </form>
         </Grid>
