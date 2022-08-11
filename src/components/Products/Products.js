@@ -13,6 +13,7 @@ import { useProducts } from "../../context";
 
 const Products = () => {
   const user = localStorage.getItem("user") || null
+  console.log(user.user)
   const isUser = user?.status //true
   const [change, setChange] = useState(true);
   const { loading, dispatch } = useProducts();

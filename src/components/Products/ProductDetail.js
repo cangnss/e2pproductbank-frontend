@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import AddComment from "../Comments/AddComment";
 import Comments from "../Comments/Comments";
 import axios from "axios";
+import { useAuth } from "../../context";
 
 const style = {
   position: "absolute",
@@ -35,8 +36,9 @@ const style = {
 };
 
 export default function ProductDetail() {
-  const user = localStorage.getItem("user") || null;
+  const { user } = useAuth()
   const isUser = user?.status; //true
+  const id = user?.id
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [comments, setComments] = useState();
@@ -129,7 +131,7 @@ export default function ProductDetail() {
                         aria-describedby="modal-modal-description"
                       >
                         <div>
-                          <AddComment productId={details?.id} userId="1" />
+                          <AddComment productId={details?.id} userId={id} />
                         </div>
                       </Modal>
                     </Box>
