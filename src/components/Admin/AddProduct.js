@@ -14,29 +14,16 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
-
+  
   const [productName, setProductName] = useState();
   const [productVendor, setProductVendor] = useState();
   const [productDescription, setProductDescription] = useState();
   const [imageFile, setImageFile] = useState(null);
   const [productCategory, setProductCategory] = useState("");
-
-  const deneme = (e) => {
-    var selectedfile = e.target.files;
-    if (selectedfile.length > 0) {
-      var imageFile = selectedfile[0];
-      var fileReader = new FileReader();
-      fileReader.onload = function (fileLoadedEvent) {
-        var srcData = fileLoadedEvent.target.result;
-        setImageFile(srcData);
-      };
-      fileReader.readAsDataURL(imageFile);
-    }
-    setImageFile(imageFile);
-  };
-  console.log("imageFile:", imageFile);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -77,7 +64,7 @@ export default function AddProduct() {
                 Add Product
               </Typography>
             </Grid>
-            <Grid item display="flex" direction="column" mb={5} xl={12}>
+            <Grid item sx={{ display:"flex", flexDirection:"column"}} mb={5} xl={12}>
               <Box mb={2}>
                 <FormControl fullWidth>
                   <TextField
@@ -148,7 +135,7 @@ export default function AddProduct() {
                     type="file"
                     accept=".png, .jpg, .jpeg"
                     onChange={(e) => {
-                      deneme(e);
+                      setImageFile(e.target.files[0]);
                     }}
                     id="imageInput"
                   />

@@ -1,11 +1,20 @@
 import { Avatar, Box } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
+import { useEffect } from "react";
 
 export default function Comments(props) {
   console.log("props:", props);
+  const comments = props?.comments
+  useEffect(()=>{
+    let mounted = true
+
+    return () => {
+      mounted = false;
+    }
+  },[comments])
   return (
     <div>
-      {props?.comments.map((product) => {
+      {comments.map((product) => {
         return (
           <div
             style={{

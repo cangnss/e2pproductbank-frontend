@@ -47,8 +47,12 @@ export default function ProductDetail() {
   const productId = params.id;
 
   useEffect(() => {
+    let mounted = true
     getProduct(productId);
     getComments(productId);
+    return function cleanup(){
+      mounted = false
+    }
   }, []);
 
   const getProduct = async (productId) => {
@@ -72,6 +76,7 @@ export default function ProductDetail() {
       .then((res) => {
         console.log(res);
         setComments(res.data.data);
+        return true
       });
   };
 

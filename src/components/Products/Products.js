@@ -9,11 +9,10 @@ import { Link, Outlet } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
-import { useProducts } from "../../context";
+import { useAuth, useProducts } from "../../context";
 
 const Products = () => {
-  const user = localStorage.getItem("user") || null
-  console.log(user.user)
+  const { user } = useAuth();
   const isUser = user?.status //true
   const [change, setChange] = useState(true);
   const { loading, dispatch } = useProducts();

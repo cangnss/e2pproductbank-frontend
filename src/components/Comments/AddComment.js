@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const style = {
   position: "absolute",
@@ -29,6 +29,7 @@ export default function AddComment(props) {
   const [productId, setProductId] = useState(props?.productId);
   const [userId, setUserId] = useState(props?.userId);
   console.log(props);
+  
   const addCommentHandler = async (event) => {
     event.preventDefault();
     await axios.post(
