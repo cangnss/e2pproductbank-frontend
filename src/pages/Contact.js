@@ -17,7 +17,6 @@ import { Marker } from "@react-google-maps/api";
 import contactPhoto from "../assets/images/billboard.jpg";
 import { color, display } from "@mui/system";
 
-
 const Contact = () => {
   const [firstlastname, setFirstlastname] = useState("");
   const [email, setEmail] = useState("");
@@ -39,17 +38,21 @@ const Contact = () => {
     setDeclaration(e.target.value);
   };
 
-
   const submitHandler = (e) => {
     e.preventDefault();
     setData((current) => [
       ...current,
-      { firstlastname: firstlastname, email: email, subject: subject, declaration: declaration },
+      {
+        firstlastname: firstlastname,
+        email: email,
+        subject: subject,
+        declaration: declaration,
+      },
     ]);
-    setFirstlastname('')
-    setEmail('')
-    setSubject('')
-    setDeclaration('')
+    setFirstlastname("");
+    setEmail("");
+    setSubject("");
+    setDeclaration("");
     console.log(data);
   };
   const defaultProps = {
@@ -63,10 +66,19 @@ const Contact = () => {
 
   return (
     <div className="contact">
-   <div style={{position:"relative"}}>
-     <h2 style={{position:"absolute", color:"white", fontSize:"40px", marginLeft:"6rem"}}>İLETİŞİM</h2>
-     <img width="100%" height="200px" src={contactPhoto} alt="" />
-   </div>
+      <div style={{ position: "relative" }}>
+        <h2
+          style={{
+            position: "absolute",
+            color: "white",
+            fontSize: "40px",
+            marginLeft: "6rem",
+          }}
+        >
+          İLETİŞİM
+        </h2>
+        <img width="100%" height="200px" src={contactPhoto} alt="" />
+      </div>
       <Grid container spacing={3}>
         <Grid
           item
@@ -129,7 +141,7 @@ const Contact = () => {
             marginTop: "2rem",
           }}
         >
-          <form id="contact-item2" onSubmit={submitHandler} >
+          <form id="contact-item2" onSubmit={submitHandler}>
             <div className="form-group">
               <TextField
                 required
@@ -213,36 +225,14 @@ const Contact = () => {
               </Box>
             </div>
             <div style={{ marginTop: "2rem" }}>
-              <Button type="submit"  variant="contained">Gönder</Button>
+              <Button type="submit" variant="contained">
+                Gönder
+              </Button>
             </div>
           </form>
-          {data.length > 0 ? (
-        <ul>
-          {data.map((item) => {
-            return (
-              <li>
-                <p>
-                    Ad-soyad: {item.firstlastname}
-                </p> 
-                <p>
-                   E-mail: {item.email}
-                </p> 
-                <p>
-                    Konu: {item.subject}
-                </p> 
-                <p>
-                  Açıklama:{item.declaration}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <p>Eleman yok</p>
-      )}
         </Grid>
       </Grid>
-        {/* <div>
+      {/* <div>
         <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: "" }}
@@ -258,8 +248,6 @@ const Contact = () => {
           </GoogleMapReact>
         </div>
         </div> */}
-        
-    
     </div>
   );
 };

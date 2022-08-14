@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Categories from "../Categories/Categories";
-import Search from "../Search/Search";
 import Switch from "@mui/material/Switch";
 import { CircularProgress, Stack, Typography } from "@mui/material";
 import ProductList from "./ProductList";
@@ -10,6 +9,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { useAuth, useProducts } from "../../context";
+import Search from "../Search/Search";
 
 const Products = () => {
   const { user } = useAuth();
@@ -34,13 +34,11 @@ const Products = () => {
 
   return (
     <div>
-      <Search />
-
       <Stack
         direction="row"
         spacing={1}
         mt={10}
-        mb={10}
+        mb={5}
         justifyContent="center"
         alignItems="center"
       >
@@ -59,7 +57,6 @@ const Products = () => {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          sx={{ marginBottom: "1rem" }}
         >
           <Grid item>
             <Button variant="contained">

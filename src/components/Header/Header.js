@@ -12,15 +12,11 @@ import {
   Container,
   Button,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
-  FormControlLabel,
-  FormGroup,
-  TextField,
+  Avatar,
 } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import SwitchLanguage from "./SwitchLanguage"
+import SwitchLanguage from "./SwitchLanguage";
 import { useAuth } from "../../context";
 import { useNavigate } from "react-router-dom";
 
@@ -32,11 +28,11 @@ const pages = [
 ];
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const user = localStorage.getItem("user")
-  const { dispatch } = useAuth();
- 
+
+  const { user, dispatch } = useAuth();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -54,9 +50,9 @@ const Header = () => {
   };
 
   const logoutHandler = () => {
-    dispatch({ type:"LOGOUT" })
-    navigate("/login")
-  }
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  };
 
   return (
     <AppBar
@@ -222,11 +218,36 @@ const Header = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 {(user && (
-                  <MenuItem>
-                    <Button onClick={logoutHandler}>
-                      <Link to="/logout" style={{ textDecoration:"none", color:"black", fontWeight:"bold"}}>Çıkış Yap</Link>
-                    </Button>
-                  </MenuItem>
+                  <>
+                    <MenuItem>
+                      <Button>
+                        <Link
+                          to={`/users/${user.id}`}
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Profile
+                        </Link>
+                      </Button>
+                    </MenuItem>
+                    <MenuItem>
+                      <Button onClick={logoutHandler}>
+                        <Link
+                          to="/logout"
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          LOGOUT
+                        </Link>
+                      </Button>
+                    </MenuItem>
+                  </>
                 )) || (
                   <>
                     <MenuItem>

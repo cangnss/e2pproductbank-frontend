@@ -22,6 +22,7 @@ import AddComment from "../Comments/AddComment";
 import Comments from "../Comments/Comments";
 import axios from "axios";
 import { useAuth } from "../../context";
+import { useNavigate } from "react-router-dom"
 
 const style = {
   position: "absolute",
@@ -36,23 +37,32 @@ const style = {
 };
 
 export default function ProductDetail() {
-  const { user } = useAuth()
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const isUser = user?.status; //true
-  const id = user?.id
+  const id = user?.id;
+  const [notify, setNotify] = useState({ message: "", show: false });
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [comments, setComments] = useState();
   const [details, setDetails] = useState();
+  const [res, setRes] = useState(false)
   const params = useParams();
   const productId = params.id;
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     getProduct(productId);
     getComments(productId);
-    return function cleanup(){
-      mounted = false
-    }
+
+    setTimeout(()=>{
+      if(res === true){
+        navigate("/products")
+      }
+    },2000)
+    return function cleanup() {
+      mounted = false;
+    };
   }, []);
 
   const getProduct = async (productId) => {
@@ -76,7 +86,17 @@ export default function ProductDetail() {
       .then((res) => {
         console.log(res);
         setComments(res.data.data);
-        return true
+        return true;
+      });
+  };
+
+  const deleteProductHandler = async () => {
+    await axios
+      .delete(`https://localhost:7182/api/Products?productId=${productId}`)
+      .then((res) => {
+        console.log(res);
+          setNotify({ message: res?.data.message, show: true });
+          setRes(true)
       });
   };
 
@@ -100,6 +120,9 @@ export default function ProductDetail() {
                 </Box>
               </Grid>
               <Grid item xl={6} sx={{ textAlign: "left" }} key={details?.id}>
+                {notify.show && (
+                  <Alert severity="success">{notify.message}</Alert>
+                )}
                 <Grid mb={5} mt={5} item>
                   <Typography variant="h5" component="h6">
                     Product Name: {details?.productName}
@@ -116,6 +139,44 @@ export default function ProductDetail() {
                   </Typography>
                 </Grid>
                 {isUser ? (
+                  <Grid item mb={10} display="flex" direction="row">
+                    <Box>
+                      <Button variant="contained">
+                        <Link
+                          to={`/admin/update/${details.id}`}
+                          key={details?.id}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Update
+                        </Link>
+                      </Button>
+                    </Box>
+                    <Box ml={5}>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={deleteProductHandler}
+                      >
+                        {/* <Link
+                          to={`/admin/delete/${details?.id}`}
+                          key={details?.id}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Delete
+                        </Link> */}
+                        Delete
+                      </Button>
+                    </Box>
+                  </Grid>
+                ) : (
                   <Grid
                     sx={{
                       display: "flex",
@@ -144,39 +205,6 @@ export default function ProductDetail() {
                       <IconButton sx={{ "&:focus": { color: "red" } }}>
                         <FavoriteIcon fontSize="large" />
                       </IconButton>
-                    </Box>
-                  </Grid>
-                ) : (
-                  <Grid item mb={10} display="flex" direction="row">
-                    <Box>
-                      <Button variant="contained">
-                        <Link
-                          to={`/admin/update/${details.id}`}
-                          key={details?.id}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Update
-                        </Link>
-                      </Button>
-                    </Box>
-                    <Box ml={5}>
-                      <Button variant="contained" color="error">
-                        <Link
-                          to={`/admin/delete/${details?.id}`}
-                          key={details?.id}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Delete
-                        </Link>
-                      </Button>
                     </Box>
                   </Grid>
                 )}

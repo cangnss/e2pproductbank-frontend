@@ -29,19 +29,15 @@ export default function AddProduct() {
     event.preventDefault();
 
     const formData = new FormData();
-
-    formData.append("ProductName", productName);
-    formData.append("ProductVendor", productVendor);
-    formData.append("ProductDescription", productDescription);
-    formData.append("ProductImage", imageFile);
-    formData.append("CategoryId", productCategory);
+    
+    // formData.append("ProductName", productName);
+    // formData.append("ProductVendor", productVendor);
+    // formData.append("ProductDescription", productDescription);
+    // formData.append("ProductImage", imageFile);
+    // formData.append("CategoryId", productCategory);
     const response = await axios({
       method: "POST",
-      url: "https://localhost:7182/api/Products/addproduct",
-      data: formData,
-      headers:{
-        "Content-Type":"multipart/form-data"
-      }
+      url: "https://localhost:7182/api/Products",
     });
     console.log(response)
   };
@@ -52,7 +48,7 @@ export default function AddProduct() {
         elevation={8}
         sx={{ width: "50%", margin: "auto", padding: "2rem" }}
       >
-        <form onSubmit={submitHandler} encType="multipart/form-data">
+        <form onSubmit={submitHandler}>
           <Grid
             container
             direction="column"
@@ -130,7 +126,7 @@ export default function AddProduct() {
                 </FormControl>
               </Box>
               <Box mb={2}>
-                <FormControl>
+                {/* <FormControl>
                   <Input
                     type="file"
                     accept=".png, .jpg, .jpeg"
@@ -139,7 +135,7 @@ export default function AddProduct() {
                     }}
                     id="imageInput"
                   />
-                </FormControl>
+                </FormControl> */}
               </Box>
               <Box>
                 <Button

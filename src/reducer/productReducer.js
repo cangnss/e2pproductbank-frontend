@@ -22,6 +22,6 @@ export default function reducer(state, action) {
         error: action.payload,
       };
     default:
-        return state;
+      return state;
   }
 }

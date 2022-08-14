@@ -21,6 +21,8 @@ import AddCategory from "./components/Admin/AddCategory";
 import CategoryDetail from "./components/Categories/CategoryDetail";
 import CategoryLayout from "./components/Categories";
 import Categories from "./components/Categories/Categories";
+import Test from "./components/Admin/Test";
+import Profile from "./components/Users/Profile";
 
 function App() {
   return (
@@ -50,6 +52,10 @@ function App() {
                   <Route path="/admin/addproduct" element={<AddProduct />} />
                   <Route path="/admin/addcategory" element={<AddCategory />} />
                   <Route path="/admin/update/:id" element={<ProductUpdate />} />
+                  <Route path="/admin/test" element={<Test />} />
+                </Route>
+                <Route path="/users">
+                  <Route path="/users/:id" element={<Profile />} />
                 </Route>
                 <Route path="*" element={<Page404 />} />
               </Routes>

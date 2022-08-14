@@ -6,18 +6,35 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, CircularProgress, Grid } from "@mui/material";
+import { Button, CircularProgress, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react"
+import { useState } from "react";
 import { useProducts } from "../../context";
 
 export default function ProductList() {
-  
+  const [filteredProducts, setFilteredProducts] = useState();
   const { loading, products } = useProducts();
-  
+
+  const getSearchProduct = (searchValue) => {
+    const foundedProduct = products.filter((product) => {
+      return product.productName
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+    });
+    setFilteredProducts(foundedProduct);
+  };
   return (
     <Grid container display="flex" justifyContent="center" alignItems="center">
       <Grid item>
+        <TextField
+          type="text"
+          placeholder="Search product..."
+          size="small"
+          sx={{ width: "20rem", marginBottom: "1rem", marginTop: "1rem" }}
+          onChange={(e) => {
+            getSearchProduct(e.target.value);
+          }}
+        ></TextField>
         <TableContainer
           size="small"
           component={Paper}
@@ -61,40 +78,87 @@ export default function ProductList() {
             </TableHead>
             <TableBody>
               {loading && <CircularProgress />}
-              {products?.map((product) => (
-                <TableRow
-                  key={product.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell
-                    align="center"
-                    component="th"
-                    scope="row"
-                    sx={{ padding: "3rem" }}
-                  >
-                    {product.productVendor}
-                  </TableCell>
-                  <TableCell align="center">{product.productName}</TableCell>
-                  <TableCell align="center">
-                    <img src={product.productIcon} alt="icon" />
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button variant="contained">
-                      <Link
-                        to={`/products/${product?.id}`}
-                        key={product?.id}
-                        style={{
-                          textDecoration: "none",
-                          color: "white",
-                          fontWeight: "bold",
+              {filteredProducts
+                ? filteredProducts.map((product) => {
+                    return (
+                      <TableRow
+                        key={product.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        Product Detail
-                      </Link>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                        <TableCell
+                          align="center"
+                          component="th"
+                          scope="row"
+                          sx={{ padding: "3rem" }}
+                        >
+                          {product.productVendor}
+                        </TableCell>
+                        <TableCell align="center">
+                          {product.productName}
+                        </TableCell>
+                        <TableCell align="center">
+                          <img src={product.productIcon} alt="icon" />
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button variant="contained">
+                            <Link
+                              to={`/products/${product?.id}`}
+                              key={product?.id}
+                              style={{
+                                textDecoration: "none",
+                                color: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Product Detail
+                            </Link>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                : products?.map((product) => {
+                    return (
+                      <TableRow
+                        key={product.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell
+                          align="center"
+                          component="th"
+                          scope="row"
+                          sx={{ padding: "3rem" }}
+                        >
+                          {product.productVendor}
+                        </TableCell>
+                        <TableCell align="center">
+                          {product.productName}
+                        </TableCell>
+                        <TableCell align="center">
+                          <img src={product.productIcon} alt="icon" />
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button variant="contained">
+                            <Link
+                              to={`/products/${product?.id}`}
+                              key={product?.id}
+                              style={{
+                                textDecoration: "none",
+                                color: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Product Detail
+                            </Link>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
             </TableBody>
           </Table>
         </TableContainer>
