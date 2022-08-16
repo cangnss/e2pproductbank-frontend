@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -13,33 +14,84 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
-import { useAuth } from "../../context";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function AddProduct() {
-  
+  const [notify, setNotify] = useState({
+    message: "",
+    success: false,
+    error: false,
+  });
+  const [categories, setCategories] = useState();
   const [productName, setProductName] = useState();
   const [productVendor, setProductVendor] = useState();
   const [productDescription, setProductDescription] = useState();
-  const [imageFile, setImageFile] = useState(null);
-  const [productCategory, setProductCategory] = useState("");
+  const [productImage, setProductImage] = useState();
+  const [productImageFile, setProductImageFile] = useState(null);
+  const [productImageSrc, setProductImageSrc] = useState("");
+  const [categoryId, setProductCategory] = useState("");
+
+  const getCategories = async () => {
+    const fetchProcess = await axios.get(
+      "https://localhost:7182/api/Categories/categories"
+    );
+    const data = await fetchProcess.data.data;
+    setCategories(data);
+  };
+  console.log(categories);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
-    
-    // formData.append("ProductName", productName);
-    // formData.append("ProductVendor", productVendor);
-    // formData.append("ProductDescription", productDescription);
-    // formData.append("ProductImage", imageFile);
-    // formData.append("CategoryId", productCategory);
-    const response = await axios({
+    console.log(
+      "Product name:",
+      productName,
+      "Product vendor:",
+      productVendor,
+      "Product desc:",
+      productDescription,
+      "productImage",
+      productImageFile,
+      "product category:",
+      categoryId
+    );
+    formData.append("ProductName", productName);
+    formData.append("ProductVendor", productVendor);
+    formData.append("ProductDescription", productDescription);
+    formData.append("ProductImage", productImage);
+    formData.append("ProductImageFile", productImageFile);
+    formData.append("ProductImageSrc", productImageSrc);
+    formData.append("CategoryId", categoryId);
+
+    await axios({
       method: "POST",
       url: "https://localhost:7182/api/Products",
-    });
-    console.log(response)
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        console.log("res", res);
+        if (res.status === 200) {
+          setNotify({ message: "Product added.", error: false, success: true });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status == 500) {
+          setNotify({
+            message: "Product name and vendor should be at least 3 character.",
+            error: true,
+            success: false,
+          });
+        }
+      });
   };
 
   return (
@@ -48,7 +100,9 @@ export default function AddProduct() {
         elevation={8}
         sx={{ width: "50%", margin: "auto", padding: "2rem" }}
       >
-        <form onSubmit={submitHandler}>
+        {notify.error && <Alert severity="error">{notify.message}</Alert>}
+        {notify.success && <Alert severity="success">{notify.message}</Alert>}
+        <form onSubmit={submitHandler} encType="multipart/form-data">
           <Grid
             container
             direction="column"
@@ -60,7 +114,12 @@ export default function AddProduct() {
                 Add Product
               </Typography>
             </Grid>
-            <Grid item sx={{ display:"flex", flexDirection:"column"}} mb={5} xl={12}>
+            <Grid
+              item
+              sx={{ display: "flex", flexDirection: "column" }}
+              mb={5}
+              xl={12}
+            >
               <Box mb={2}>
                 <FormControl fullWidth>
                   <TextField
@@ -110,32 +169,38 @@ export default function AddProduct() {
                     id="productCategory"
                     name="productCategory"
                     label="Category"
-                    value={productCategory}
+                    value={categoryId}
                     onChange={(e) => {
                       setProductCategory(e.target.value);
                     }}
                   >
-                    <MenuItem value="1">Browser</MenuItem>
-                    <MenuItem value="2">Android</MenuItem>
-                    <MenuItem value="3">Draw</MenuItem>
-                    <MenuItem value="4">Cloud</MenuItem>
-                    <MenuItem value="5">Password</MenuItem>
-                    <MenuItem value="6">Antivirus</MenuItem>
-                    <MenuItem value="7">File</MenuItem>
+                    {categories?.map((category) => {
+                      return (
+                        <MenuItem key={category.id} value={category.id}>
+                          {category.categoryName}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
               </Box>
               <Box mb={2}>
-                {/* <FormControl>
+                <FormControl>
                   <Input
                     type="file"
                     accept=".png, .jpg, .jpeg"
                     onChange={(e) => {
-                      setImageFile(e.target.files[0]);
+                      if (!e.target.files[0]) {
+                        setProductImageSrc("-1");
+                      } else {
+                        setProductImageFile(e.target.files[0]);
+                        setProductImage(e.target.files[0].name);
+                        setProductImageSrc("asdasds");
+                      }
                     }}
                     id="imageInput"
                   />
-                </FormControl> */}
+                </FormControl>
               </Box>
               <Box>
                 <Button

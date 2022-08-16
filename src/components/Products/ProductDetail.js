@@ -116,7 +116,7 @@ export default function ProductDetail() {
                   }}
                   mx="auto"
                 >
-                  {/* <img src={rastPhoto} alt="" width="100%" height="50%" /> */}
+                  <img src={details?.productImageSrc} alt="Product Image" width="100%" height="50%" />
                 </Box>
               </Grid>
               <Grid item xl={6} sx={{ textAlign: "left" }} key={details?.id}>

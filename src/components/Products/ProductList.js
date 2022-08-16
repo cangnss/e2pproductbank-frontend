@@ -99,7 +99,7 @@ export default function ProductList() {
                           {product.productName}
                         </TableCell>
                         <TableCell align="center">
-                          <img src={product.productIcon} alt="icon" />
+                          <img src={product.productImageSrc} alt="icon" />
                         </TableCell>
                         <TableCell align="center">
                           <Button variant="contained">
