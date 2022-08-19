@@ -11,6 +11,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         products: action.payload,
+        page:0,
         loading: false,
         error: "",
       };

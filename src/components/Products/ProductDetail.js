@@ -131,17 +131,17 @@ export default function ProductDetail() {
                   <Alert severity="success">{notify.message}</Alert>
                 )}
                 <Grid mb={5} item>
-                  <Typography variant="h5" component="h6">
-                    Product Name: {details?.productName}
+                  <Typography variant="h6">
+                    Product Name:{details?.productName}
                   </Typography>
                 </Grid>
                 <Grid mb={5} item>
-                  <Typography variant="h5" component="h6">
+                  <Typography variant="h6">
                     Product Vendor: {details?.productVendor}
                   </Typography>
                 </Grid>
                 <Grid mb={5} item>
-                  <Typography variant="h5" component="h6">
+                  <Typography variant="h6">
                     Product Description: {details?.productDescription}
                   </Typography>
                 </Grid>
@@ -202,7 +202,7 @@ export default function ProductDetail() {
                     <Box sx={{ width: "50%", display:"flex", flexDirection:"row" }}>
                       {user?.status === false ? (
                         <>
-                          <Button variant="contained" onClick={handleOpen}>
+                          <Button variant="contained" size="small" sx={{ fontWeight: "bold" }} onClick={handleOpen}>
                             Send Comment
                           </Button>
                           <Modal

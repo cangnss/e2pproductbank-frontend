@@ -12,10 +12,18 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import GoogleMapReact from "google-map-react";
-import { Marker } from "@react-google-maps/api";
 import contactPhoto from "../assets/images/billboard.jpg";
-import { color, display } from "@mui/system";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+
+const containerStyle = {
+  width: "400px",
+  height: "400px",
+};
+
+const center = {
+  lat: -3.745,
+  lng: -38.523,
+};
 
 const Contact = () => {
   const [firstlastname, setFirstlastname] = useState("");
@@ -55,18 +63,27 @@ const Contact = () => {
     setDeclaration("");
     console.log(data);
   };
-  const defaultProps = {
-    center: {
-      lat: 39.86183,
-      lng: 32.7278329,
-    },
-    zoom: 11,
-  };
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "YOUR_API_KEY",
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
 
   return (
     <div className="contact">
-      <div style={{ position: "relative", marginTop:"3.5rem" }}>
+      <div style={{ position: "relative", marginTop: "3.5rem" }}>
         <h2
           style={{
             position: "absolute",
@@ -232,22 +249,20 @@ const Contact = () => {
           </form>
         </Grid>
       </Grid>
-      {/* <div>
-        <div style={{ height: "100vh", width: "100%" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: "" }}
-            defaultCenter={defaultProps.center}
-            defaultZoom={defaultProps.zoom}
-          >
-            <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-            <Marker
-              icon="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-              key="1"
-              position={{ lat: 59.955413, lng: 30.337844 }}
-            />
-          </GoogleMapReact>
-        </div>
-        </div> */}
+      {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          {/* Child components, such as markers, info windows, etc. */}
+          <></>
+        </GoogleMap>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

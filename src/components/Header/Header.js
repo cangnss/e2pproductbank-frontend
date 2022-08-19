@@ -163,7 +163,7 @@ const Header = () => {
               flexDirection: { xs: "column", md: "row", lg: "row", xl: "row" },
             }}
           >
-            <React.Fragment>
+            <Box>
               <Box
                 sx={{
                   display: "flex",
@@ -182,7 +182,6 @@ const Header = () => {
                 </IconButton>
               </Box>
               <Menu
-
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
@@ -218,7 +217,7 @@ const Header = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 {(user && (
-                  <>
+                  <div>
                     <MenuItem>
                       <Button>
                         <Link
@@ -247,9 +246,9 @@ const Header = () => {
                         </Link>
                       </Button>
                     </MenuItem>
-                  </>
+                  </div>
                 )) || (
-                  <>
+                  <div>
                     <MenuItem>
                       <Link
                         to="/login"
@@ -274,10 +273,10 @@ const Header = () => {
                         Register
                       </Link>
                     </MenuItem>
-                  </>
+                  </div>
                 )}
               </Menu>
-            </React.Fragment>
+            </Box>
           </Box>
           <Box sx={{marginRight:"2rem"}}>
             <SwitchLanguage />

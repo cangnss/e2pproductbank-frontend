@@ -8,7 +8,7 @@ export default function reducer(state, action){
             theme
         }
     case "TOGGLE_LANGUAGE":
-        const language = state.language === 'tr' ? 'en' : 'tr'
+        const language = state.language === 'eng' ? 'tr' : 'eng'
         localStorage.setItem("language", language)
         return {
             ...state,

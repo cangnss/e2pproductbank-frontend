@@ -6,14 +6,20 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, CircularProgress, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  TableFooter,
+  TextField,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useProducts } from "../../context";
 
 export default function ProductList() {
   const [filteredProducts, setFilteredProducts] = useState();
-  const { loading, products } = useProducts();
+  const { loading, products, page } = useProducts();
 
   const getSearchProduct = (searchValue) => {
     const foundedProduct = products.filter((product) => {
@@ -23,6 +29,14 @@ export default function ProductList() {
     });
     setFilteredProducts(foundedProduct);
   };
+
+  // const showMore = (prevState) => {
+  //   page: page + 1
+  // }
+
+  // const showLess = () => {
+
+  // }
   return (
     <Grid container display="flex" justifyContent="center" alignItems="center">
       <Grid item>
@@ -36,13 +50,13 @@ export default function ProductList() {
               fontSize: 18,
               backgroundColor: "white",
               fontWeight: "bold",
-              padding:".7rem",
-              borderRadius:"2rem",
-              border:"2px solid #283991"
+              padding: ".7rem",
+              borderRadius: "2rem",
+              border: "2px solid #283991",
             },
           }}
           InputProps={{
-            disableUnderline:true
+            disableUnderline: true,
           }}
           sx={{
             width: "20rem",
@@ -61,12 +75,10 @@ export default function ProductList() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            flexDirection: "column",
           }}
         >
-          <Table
-            sx={{ border: "2px solid #283991" }}
-            aria-label="simple table"
-          >
+          <Table sx={{ border: "2px solid #283991" }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell
@@ -109,7 +121,7 @@ export default function ProductList() {
                           "&:hover": {
                             background: "rgb(216,222,255)",
                             background:
-                           " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)"
+                              " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)",
                           },
                         }}
                       >
@@ -155,15 +167,11 @@ export default function ProductList() {
                           "&:hover": {
                             background: "rgb(216,222,255)",
                             background:
-                           " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)"
+                              " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)",
                           },
                         }}
                       >
-                        <TableCell
-                          align="center"
-                          component="th"
-                          scope="row"
-                        >
+                        <TableCell align="center" component="th" scope="row">
                           {product.productVendor}
                         </TableCell>
                         <TableCell align="center">
@@ -191,6 +199,10 @@ export default function ProductList() {
                     );
                   })}
             </TableBody>
+            <TableFooter>
+              {/* <Button sx={{ marginRight:"5rem"}} variant="contained" onClick={showMore}>Show More</Button>
+              <Button variant="contained" onClick={showLess}>Show Less</Button> */}
+            </TableFooter>
           </Table>
         </TableContainer>
       </Grid>
