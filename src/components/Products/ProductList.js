@@ -27,10 +27,29 @@ export default function ProductList() {
     <Grid container display="flex" justifyContent="center" alignItems="center">
       <Grid item>
         <TextField
-          type="text"
+          variant="standard"
           placeholder="Search product..."
           size="small"
-          sx={{ width: "20rem", marginBottom: "1rem", marginTop: "1rem" }}
+          focused
+          inputProps={{
+            style: {
+              fontSize: 18,
+              backgroundColor: "white",
+              fontWeight: "bold",
+              padding:".7rem",
+              borderRadius:"2rem",
+              border:"2px solid #283991"
+            },
+          }}
+          InputProps={{
+            disableUnderline:true
+          }}
+          sx={{
+            width: "20rem",
+            marginBottom: "2rem",
+            marginTop: "1rem",
+            color: "white",
+          }}
           onChange={(e) => {
             getSearchProduct(e.target.value);
           }}
@@ -45,7 +64,7 @@ export default function ProductList() {
           }}
         >
           <Table
-            sx={{ border: "2px solid #283991", borderRadius: "15px" }}
+            sx={{ border: "2px solid #283991" }}
             aria-label="simple table"
           >
             <TableHead>
@@ -85,6 +104,13 @@ export default function ProductList() {
                         key={product.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
+
+                          background: "white",
+                          "&:hover": {
+                            background: "rgb(216,222,255)",
+                            background:
+                           " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)"
+                          },
                         }}
                       >
                         <TableCell
@@ -125,13 +151,18 @@ export default function ProductList() {
                         key={product.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
+                          background: "white",
+                          "&:hover": {
+                            background: "rgb(216,222,255)",
+                            background:
+                           " linear-gradient(139deg, rgba(216,222,255,1) 0%, rgba(254,254,254,1) 72%)"
+                          },
                         }}
                       >
                         <TableCell
                           align="center"
                           component="th"
                           scope="row"
-                          sx={{ padding: "3rem" }}
                         >
                           {product.productVendor}
                         </TableCell>
@@ -142,7 +173,7 @@ export default function ProductList() {
                           <img src={product.productIcon} alt="icon" />
                         </TableCell>
                         <TableCell align="center">
-                          <Button variant="contained">
+                          <Button variant="contained" size="small">
                             <Link
                               to={`/products/${product?.id}`}
                               key={product?.id}

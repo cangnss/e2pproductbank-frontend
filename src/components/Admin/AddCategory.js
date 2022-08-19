@@ -4,6 +4,7 @@ import { useState } from "react";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/system";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function AddCategory() {
   const [notify, setNotify] = useState({ message: "", show: null });
@@ -27,7 +28,7 @@ export default function AddCategory() {
   return (
     <>
       <Paper
-        sx={{ height: "50%", width: "50%", margin: "auto", padding: "1rem" }}
+        sx={{ height: "50%", width: "50%", margin: "auto", padding: "1rem" , marginBottom:"8rem",marginTop:"5rem",borderRadius:"2rem",border:"2px solid #283991" }}
       >
         {notify.show ? (
           <Stack
@@ -68,6 +69,7 @@ export default function AddCategory() {
               }}
             ></TextField>
             <Button variant="contained" type="submit" size="medium">
+              <AddIcon style={{marginRight:".5rem"}}></AddIcon>
               Add
             </Button>
           </Box>

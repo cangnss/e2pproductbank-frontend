@@ -98,7 +98,7 @@ export default function AddProduct() {
     <div>
       <Paper
         elevation={8}
-        sx={{ width: "50%", margin: "auto", padding: "2rem" }}
+        sx={{ width: "50%", margin: "auto", padding: "2rem", marginBottom:"8rem",marginTop:"5rem",borderRadius:"2rem",border:"2px solid #283991"}}
       >
         {notify.error && <Alert severity="error">{notify.message}</Alert>}
         {notify.success && <Alert severity="success">{notify.message}</Alert>}

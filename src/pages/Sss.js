@@ -7,8 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Grid } from "@mui/material";
-import SssPhoto from "../assets/images/SssPhoto.jpg";
+import { Box, Grid } from "@mui/material";
+import SssPhoto from "../assets/images/SssPhoto.png";
 
 // const styledButton = style(Button)`
 //     &:hover{
@@ -26,9 +26,12 @@ const Sss = () => {
   return (
     <>
     
-      <Grid container direction="row">
+      <Grid container direction="row" style={{marginTop:"6rem", marginBottom:"3rem"}}>
       <Grid item lg={6} xl={6} mt={6}>
-          <img style={{}} width="75%" height="75%" src={SssPhoto} alt="" />
+        <Box style={{marginTop:"4rem"}}>
+        <img style={{}} width="100%" src={SssPhoto} alt="" />
+        </Box>
+         
         </Grid>
 
         <Grid item xl={6} lg={6} mt={5} sx={{display:"flex", justifyContent:"center", flexDirection:"column"}} >

@@ -35,9 +35,23 @@ const Categories = () => {
     <div>
       <TextField
         type="text"
+        variant="standard"
         placeholder="Search category..."
         size="small"
-        sx={{ width: "20rem", marginBottom: "1rem", marginTop: "1rem" }}
+        sx={{ width: "20rem", marginBottom: "2rem", marginTop: "1rem"}}
+        inputProps={{
+          style: {
+            fontSize: 18,
+            backgroundColor: "white",
+            fontWeight: "bold",
+            borderRadius:"2rem",
+            padding:".7rem",
+            border:"2px solid #283991"
+          },
+        }}
+        InputProps={{ 
+          disableUnderline:true
+        }}
         onChange={(e) => {
           getSearchCategories(e.target.value);
         }}
@@ -79,6 +93,7 @@ const Categories = () => {
                         flexDirection: "column",
                         backgroundColor: "#fff",
                         borderRadius: "15px",
+                        border:"2px solid #283991",
                         boxShadow:
                           "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
                         "&:hover": {
@@ -124,6 +139,7 @@ const Categories = () => {
                         flexDirection: "column",
                         backgroundColor: "#fff",
                         borderRadius: "15px",
+                        border:"2px solid #283991",
                         boxShadow:
                           "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
                         "&:hover": {

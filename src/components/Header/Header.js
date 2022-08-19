@@ -158,7 +158,7 @@ const Header = () => {
           </Box>
           <Box
             sx={{
-              marginRight: "2rem",
+              marginRight: "3rem",
               display: { xs: "flex" },
               flexDirection: { xs: "column", md: "row", lg: "row", xl: "row" },
             }}
@@ -173,16 +173,16 @@ const Header = () => {
               >
                 <IconButton
                   onClick={handleClick}
-                  size="small"
                   sx={{ color: "white", ml: 2 }}
                   aria-controls={open ? "account-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                 >
-                  <MenuIcon></MenuIcon>
+                  <MenuIcon sx={{ fontSize:"22px"}}></MenuIcon>
                 </IconButton>
               </Box>
               <Menu
+
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
@@ -279,7 +279,7 @@ const Header = () => {
               </Menu>
             </React.Fragment>
           </Box>
-          <Box>
+          <Box sx={{marginRight:"2rem"}}>
             <SwitchLanguage />
           </Box>
         </Toolbar>

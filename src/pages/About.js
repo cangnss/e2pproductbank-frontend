@@ -8,7 +8,7 @@ import aboutPhoto from "../assets/images/Aboutbanner.jpg";
 function About() {
   return (
     <>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative",marginTop:"3.6rem" }}>
         <h2
           style={{
             position: "absolute",

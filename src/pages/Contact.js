@@ -66,7 +66,7 @@ const Contact = () => {
 
   return (
     <div className="contact">
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", marginTop:"3.5rem" }}>
         <h2
           style={{
             position: "absolute",

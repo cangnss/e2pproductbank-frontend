@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import SendIcon from '@mui/icons-material/Send';
 
 const style = {
   position: "absolute",
@@ -24,31 +26,50 @@ const style = {
 };
 
 export default function AddComment(props) {
-  const [notify, setNotify] = useState({ message:'', show: false })
+  const [notify, setNotify] = useState({ message: "", show: false });
+  const [isDisabled, setIsDisabled] = useState(false);
   const [commentText, setCommentText] = useState();
   const [productId, setProductId] = useState(props?.productId);
   const [userId, setUserId] = useState(props?.userId);
+
   console.log(props);
-  
+
   const addCommentHandler = async (event) => {
     event.preventDefault();
-    await axios.post(
-      `https://localhost:7182/api/Comments/addcomment?productId=${productId}&userId=${userId}&commentText=${commentText}`
-    ).then((res)=>{
-      console.log(res)
-      if(res?.status === 200){
-        setNotify({ message: res.data.message, show: true})
-      }
-    }).catch((err)=>{
-      console.log(err)
-    })
+    console.log(typeof commentText);
+
+    await axios
+      .post(
+        `https://localhost:7182/api/Comments/addcomment?productId=${productId}&userId=${userId}&commentText=${commentText}`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res?.status === 200) {
+          setNotify({ message: res.data.message, show: true });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <Box sx={style}>
       <Grid>
+        <Grid item sx={{ display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}>
+          <CloseIcon
+            onClick={props.closeModal}
+            mr={5}
+            variant="contained"
+            sx={{ marginTop: "1rem" }}
+          ></CloseIcon>
+        </Grid>
         <Grid item display="flex" direction="column">
-          {notify.show && <Alert severity="success">{notify.message}</Alert>}
+          {notify.show && (
+            <Alert severity={notify.show ? "success" : "error"}>
+              {notify.message}
+            </Alert>
+          )}
           <form onSubmit={addCommentHandler}>
             <input
               type="hidden"
@@ -63,19 +84,36 @@ export default function AddComment(props) {
               id="userId"
             />
             <Box mb={5}>
-              <InputLabel htmlFor="commentText">Comment</InputLabel>
+              <InputLabel htmlFor="commentText" sx={{ fontWeight: "bold" }}>
+                Comment
+              </InputLabel>
               <TextField
                 id="commentText"
                 name="commentText"
                 placeholder="Your comment..."
                 onChange={(e) => {
-                  setCommentText(e.target.value);
+                  if (e.target.value === " ") {
+                    setIsDisabled(true);
+                  } else if (
+                    e.target.value === "null" ||
+                    e.target.value === "undefined"
+                  ) {
+                    setNotify({
+                      message: "Please enter a comment!",
+                      show: false,
+                    });
+                    setIsDisabled(true);
+                  } else {
+                    setCommentText((prevState) => e.target.value);
+                    setIsDisabled(false);
+                  }
                 }}
                 fullWidth
               />
             </Box>
             <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" disabled={isDisabled}>
+                <SendIcon sx={{marginRight:".5rem",fontSize:"medium"}}></SendIcon>
                 Send
               </Button>
             </Box>

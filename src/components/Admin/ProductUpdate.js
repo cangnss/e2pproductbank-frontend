@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useState } from "react";
 
+
 const ProductUpdate = () => {
   const [category, setCategory] = useState("");
   const handleChange = (event) => {
@@ -24,7 +25,7 @@ const ProductUpdate = () => {
     <>
       <Paper
         elevation={3}
-        style={{ width: "50%", margin: "auto", padding: "5rem" }}
+        style={{ width: "50%", margin: "auto", padding: "5rem", marginBottom:"8rem",marginTop:"5rem",borderRadius:"2rem",border:"2px solid #283991"}}
       >
         <Grid container display="flex" direction="column" justifyContent="center"
             alignItems="center">

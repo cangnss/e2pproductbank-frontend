@@ -22,7 +22,9 @@ import AddComment from "../Comments/AddComment";
 import Comments from "../Comments/Comments";
 import axios from "axios";
 import { useAuth } from "../../context";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 
 const style = {
   position: "absolute",
@@ -46,23 +48,13 @@ export default function ProductDetail() {
   const [expanded, setExpanded] = useState(false);
   const [comments, setComments] = useState();
   const [details, setDetails] = useState();
-  const [res, setRes] = useState(false)
+  const [res, setRes] = useState(false);
   const params = useParams();
   const productId = params.id;
 
   useEffect(() => {
-    let mounted = true;
     getProduct(productId);
     getComments(productId);
-
-    setTimeout(()=>{
-      if(res === true){
-        navigate("/products")
-      }
-    },2000)
-    return function cleanup() {
-      mounted = false;
-    };
   }, []);
 
   const getProduct = async (productId) => {
@@ -95,8 +87,8 @@ export default function ProductDetail() {
       .delete(`https://localhost:7182/api/Products?productId=${productId}`)
       .then((res) => {
         console.log(res);
-          setNotify({ message: res?.data.message, show: true });
-          setRes(true)
+        setNotify({ message: res?.data.message, show: true });
+        setRes(true);
       });
   };
 
@@ -104,7 +96,17 @@ export default function ProductDetail() {
     <>
       {details && comments ? (
         <>
-          <Paper elevation={3} style={{ width: "50%", margin: "auto" }}>
+          <Paper
+            elevation={3}
+            style={{
+              width: "50%",
+              margin: "auto",
+              marginBottom: "5rem",
+              marginTop: "8rem",
+              borderRadius: "2rem",
+              border: "2px solid #283991 ",
+            }}
+          >
             <Grid container mt={10} direction="row">
               <Grid item xl={6}>
                 <Box
@@ -116,14 +118,19 @@ export default function ProductDetail() {
                   }}
                   mx="auto"
                 >
-                  <img src={details?.productImageSrc} alt="Product Image" width="100%" height="50%" />
+                  <img
+                    src={details?.productImageSrc}
+                    alt="Product Image"
+                    width="100%"
+                    height="50%"
+                  />
                 </Box>
               </Grid>
               <Grid item xl={6} sx={{ textAlign: "left" }} key={details?.id}>
                 {notify.show && (
                   <Alert severity="success">{notify.message}</Alert>
                 )}
-                <Grid mb={5} mt={5} item>
+                <Grid mb={5} item>
                   <Typography variant="h5" component="h6">
                     Product Name: {details?.productName}
                   </Typography>
@@ -138,7 +145,7 @@ export default function ProductDetail() {
                     Product Description: {details?.productDescription}
                   </Typography>
                 </Grid>
-                {isUser ? (
+                {user && user?.status ? (
                   <Grid item mb={10} display="flex" direction="row">
                     <Box>
                       <Button variant="contained">
@@ -149,8 +156,13 @@ export default function ProductDetail() {
                             textDecoration: "none",
                             color: "white",
                             fontWeight: "bold",
+                            display: "flex",
+                            justifyContent: "center",
                           }}
                         >
+                          <ChangeCircleIcon
+                            style={{ marginRight: ".5rem" }}
+                          ></ChangeCircleIcon>
                           Update
                         </Link>
                       </Button>
@@ -172,6 +184,7 @@ export default function ProductDetail() {
                         >
                           Delete
                         </Link> */}
+                        <DeleteIcon sx={{ marginRight: ".5rem" }}></DeleteIcon>
                         Delete
                       </Button>
                     </Box>
@@ -186,25 +199,33 @@ export default function ProductDetail() {
                     mb={5}
                     item
                   >
-                    <Box sx={{ width: "50%" }}>
-                      <Button variant="contained" onClick={handleOpen}>
-                        Send Comment
-                      </Button>
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <div>
-                          <AddComment productId={details?.id} userId={id} />
-                        </div>
-                      </Modal>
-                    </Box>
-                    <Box mt={-1}>
-                      <IconButton sx={{ "&:focus": { color: "red" } }}>
-                        <FavoriteIcon fontSize="large" />
-                      </IconButton>
+                    <Box sx={{ width: "50%", display:"flex", flexDirection:"row" }}>
+                      {user?.status === false ? (
+                        <>
+                          <Button variant="contained" onClick={handleOpen}>
+                            Send Comment
+                          </Button>
+                          <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <div>
+                              <AddComment
+                                productId={details?.id}
+                                userId={id}
+                                closeModal={handleClose}
+                              />
+                            </div>
+                          </Modal>
+                          <Box mt={-1}>
+                            <IconButton sx={{ "&:focus": { color: "red" } }}>
+                              <FavoriteIcon fontSize="large" />
+                            </IconButton>
+                          </Box>
+                        </>
+                      ) : null}
                     </Box>
                   </Grid>
                 )}

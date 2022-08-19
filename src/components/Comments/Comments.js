@@ -16,11 +16,11 @@ export default function Comments(props) {
               marginBottom: "2rem",
               display: "flex",
               flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "space-between ",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar>
+              <Avatar sx={{marginTop:"2rem"}}>
                 <PersonIcon />
               </Avatar>
             </Box>

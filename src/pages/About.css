@@ -1,6 +1,7 @@
 .about{
-    height: 100vh;
-    
+    height: 100%;
+    background-color: #EFEFEF;
+    padding-bottom: 10rem;   
 }
 .item1{
     text-align: center;

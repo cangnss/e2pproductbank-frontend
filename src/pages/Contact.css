@@ -1,5 +1,7 @@
 .contact{
-    height: 100vh;
+    height: 100%;
+    background-color: #fff;
+    padding-bottom: 10rem;
 }
 .form-group{
     padding-top: 2.4rem;

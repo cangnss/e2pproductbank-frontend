@@ -13,42 +13,43 @@ import Search from "../Search/Search";
 
 const Products = () => {
   const { user } = useAuth();
-  const isUser = user?.status //true
+  const isUser = user?.status; //true
   const [change, setChange] = useState(true);
   const { loading, dispatch } = useProducts();
 
-  useEffect(()=>{
-    getProducts()
-  }, [])
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const getProducts = async () => {
-    dispatch({ type:'FETCH_START' })
-    await axios.get("https://localhost:7182/api/Products/getall")
-               .then((res)=>{
-                dispatch({ type:'FETCH_SUCCESS', payload: res.data.data })
-               })
-               .catch((err)=>{
-                dispatch({ type:'FETCH_FAILED', error:'ERROR!!!'})
-               })
-  }
+    dispatch({ type: "FETCH_START" });
+    await axios
+      .get("https://localhost:7182/api/Products/getall")
+      .then((res) => {
+        dispatch({ type: "FETCH_SUCCESS", payload: res.data.data });
+      })
+      .catch((err) => {
+        dispatch({ type: "FETCH_FAILED", error: "ERROR!!!" });
+      });
+  };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#C4CEFF", paddingBottom:"10rem"}}>
       <Stack
         direction="row"
         spacing={1}
-        mt={10}
+        pt={10}
         mb={5}
         justifyContent="center"
         alignItems="center"
       >
-        <Typography>Products</Typography>
+        <Typography sx={{ color:"#fff", fontWeight:"bold", fontSize:"20px"}}>Products</Typography>
         <Switch
           onChange={() => {
             setChange(!change);
           }}
         />
-        <Typography>Categories</Typography>
+        <Typography sx={{ color:"#fff", fontWeight:"bold", fontSize:"20px"}}>Categories</Typography>
       </Stack>
       {isUser ? (
         <Grid

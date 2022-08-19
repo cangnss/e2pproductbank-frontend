@@ -5,12 +5,9 @@ import registerPhoto from "../../assets/images/23322.jpg"
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import axios from "axios"
-
+import { useNavigate } from "react-router-dom";
 
 const countries = [
   {
@@ -28,6 +25,7 @@ const countries = [
 ];
 
 const Register = () => {
+  let navigate = useNavigate();
   const [notify, setNotitfy] = React.useState({ message: '', status: 0, visible:false })
   const [firstname, setFirstname] = React.useState('');
   const [lastname, setLastname] = React.useState('');
@@ -67,13 +65,13 @@ const Register = () => {
     console.log(response)
     if(response?.data.success)
       setNotitfy({ message: response?.data.message, status: 200, visible:true })
+      setTimeout(()=>{
+        navigate("/login")
+      }, 2000)
   }
 
   return (
     <div className="register">
-      {notify.visible && notify.status === 200 ? (
-        <Alert severity="success">{notify.message}</Alert>
-      ) : (null)}
       <Grid container spacing={2}>
         <Grid
           item
@@ -188,26 +186,9 @@ const Register = () => {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
-                    // type={values.showPassword ? "text" : "password"}
-                    // value={values.password}
                     onChange={passwordHandler}
+                    type="password"
                     name="password"
-                    // endAdornment={
-                    //   <InputAdornment>
-                    //     <IconButton
-                    //       aria-label="toggle password visibility"
-                    //       onClick={handleClickShowPassword}
-                    //       onMouseDown={handleMouseDownPassword}
-                    //       edge="start"
-                    //     >
-                    //       {values.showPassword ? (
-                    //         <VisibilityOff />
-                    //       ) : (
-                    //         <Visibility />
-                    //       )}
-                    //     </IconButton>
-                    //   </InputAdornment>
-                    // }
                     label="Password"
                   />
                 </FormControl>
