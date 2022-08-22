@@ -23,6 +23,7 @@ import CategoryLayout from "./components/Categories";
 import Categories from "./components/Categories/Categories";
 import Test from "./components/Admin/Test";
 import Profile from "./components/Users/Profile";
+import ProfileUpdate from "./components/Users/ProfileUpdate"
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
                 </Route>
                 <Route path="/users">
                   <Route path="/users/:id" element={<Profile />} />
+                  <Route path="/users/:id/profileupdate/:id" element={<ProfileUpdate />} />
                 </Route>
                 <Route path="*" element={<Page404 />} />
               </Routes>

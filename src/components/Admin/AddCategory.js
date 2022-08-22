@@ -30,22 +30,13 @@ export default function AddCategory() {
       <Paper
         sx={{ height: "50%", width: "50%", margin: "auto", padding: "1rem" , marginBottom:"8rem",marginTop:"5rem",borderRadius:"2rem",border:"2px solid #283991" }}
       >
-        {notify.show ? (
+        {notify.show && (
           <Stack
             sx={{ width: "50%", margin: "auto", marginBottom: "1rem" }}
             spacing={2}
           >
             <Alert severity="success">
-              This is a success alert — check it out!
-            </Alert>
-          </Stack>
-        ) : (
-          <Stack
-            sx={{ width: "50%", margin: "auto", marginBottom: "1rem" }}
-            spacing={2}
-          >
-            <Alert severity="error">
-              This is a danger alert — check it out!
+              Category added.
             </Alert>
           </Stack>
         )}
@@ -73,7 +64,7 @@ export default function AddCategory() {
               Add
             </Button>
           </Box>
-        </form>
+        </form> 
       </Paper>
     </>
   );

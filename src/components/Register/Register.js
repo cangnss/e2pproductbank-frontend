@@ -112,7 +112,7 @@ const Register = () => {
             >
               <Box
                 sx={{
-                  marginLeft: { xs: ".8rem" },
+                  marginLeft: { xs: "6rem" },
                   marginRight: { xs: ".8rem" },
                   marginBottom:{xs:".8rem"}
                 }}
@@ -121,6 +121,7 @@ const Register = () => {
                   id="outlined-basic"
                   label="First Name"
                   name="firstname"
+                  sx={{ width:"15rem"}}
                   onChange={firstnameHandler}
                   variant="outlined"
                   InputProps={{
@@ -137,6 +138,7 @@ const Register = () => {
                   id="outlined-basic"
                   label="Last Name"
                   name="lastname"
+                  sx={{ width:"15rem"}}
                   onChange={lastnameHandler}
                   variant="outlined"
                   InputProps={{
@@ -159,7 +161,7 @@ const Register = () => {
             >
               <Box
                 sx={{
-                  marginLeft: { xs: ".8rem" },
+                  marginLeft: { xs: "6rem" },
                   marginRight: { xs: ".8rem" },
                   marginBottom:{xs:".8rem"}
                 }}
@@ -168,6 +170,7 @@ const Register = () => {
                   id="outlined-basic"
                   label="E-mail"
                   name="email"
+                  sx={{ width:"15rem"}}
                   onChange={emailHandler}
                   variant="outlined"
                   InputProps={{
@@ -180,7 +183,7 @@ const Register = () => {
                 />
               </Box>
               <Box >
-                <FormControl  variant="outlined">
+                <FormControl  variant="outlined"  sx={{ width:"15rem"}}>
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
                   </InputLabel>
@@ -204,7 +207,7 @@ const Register = () => {
             >
               <Box
                 sx={{
-                  marginLeft: { xs: ".8rem" },
+                  marginLeft: { xs: "6rem" },
                   marginRight: { xs: ".8rem" },
                   marginBottom:{xs:".8rem"}
                 }}
@@ -214,12 +217,35 @@ const Register = () => {
                   id="outlined-basic"
                   label="Username"
                   name="username"
+                  sx={{ width:"15rem"}}
                   onChange={usernameHandler}
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
                         <MailIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  
+                  marginBottom:{xs:".8rem"}
+                }}
+              >
+                <TextField
+                  id="outlined-basic"
+                  label="Phone Number"
+                  name="phone"
+                  sx={{ width:"15rem"}}
+                  onChange={phoneHandler}
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LocalPhoneIcon />
                       </InputAdornment>
                     ),
                   }}
@@ -232,35 +258,16 @@ const Register = () => {
                 display: "flex",
                 flexDirection: "row",
                 marginBottom: ".5rem",
+                marginLeft:"6rem",
+                justifyContent:"center"
               }}
             >
-              <Box
-                sx={{
-                  marginLeft: { xs: ".8rem" },
-                  marginRight: { xs: ".8rem" },
-                  marginBottom:{xs:".8rem"}
-                }}
-              >
-                <TextField
-                  id="outlined-basic"
-                  label="Phone Number"
-                  name="phone"
-                  onChange={phoneHandler}
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Box>
+              
               <Box>
                 <TextField
                   id="outlined-basic"
                   select
-                  sx={{ width:"255px"}}
+                  sx={{ width:"15rem"}}
                   label="Country"
                   name="country"
                   value={country}
@@ -279,7 +286,7 @@ const Register = () => {
               </Box>
             </Grid>
             <input type="hidden" value="false" name="status" onChange={()=> { setStatus(false)}} />
-            <Grid item sx={{ marginBottom: ".8rem" }}>
+            <Grid item sx={{ marginBottom: ".8rem",  marginTop:"2rem",display:"flex", justifyContent:"flex-end" }}>
               <Button variant="contained" type="submit">REGISTER</Button>
             </Grid>
           </form>

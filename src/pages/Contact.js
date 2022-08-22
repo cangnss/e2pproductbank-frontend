@@ -1,4 +1,5 @@
 import "./Contact.css";
+import React from "react"
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -16,8 +17,8 @@ import contactPhoto from "../assets/images/billboard.jpg";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
+  width: "100%",
+  height: "100%",
 };
 
 const center = {
@@ -108,14 +109,15 @@ const Contact = () => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
+            marginBottom:"10rem"
           }}
         >
-          <h2 style={{ alignitems: "center", marginTop: "3.6rem" }}>
+          <h2 style={{ alignitems: "center" }}>
             İLETİŞİM
           </h2>
-          <Box sx={{ mx: "auto" }}>
+          <Box >
             <List>
-              <ListItem disablePadding>
+              <ListItem >
                 <ListItemButton>
                   <ListItemIcon>
                     <CallIcon sx={{ color: "black" }} />
@@ -123,7 +125,7 @@ const Contact = () => {
                   <ListItemText primary="+90 312 502 21 21" />
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
+              <ListItem >
                 <ListItemButton>
                   <ListItemIcon>
                     <EmailIcon sx={{ color: "black" }} />
@@ -131,7 +133,7 @@ const Contact = () => {
                   <ListItemText primary="info@arksoft.com.tr" />
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
+              <ListItem >
                 <ListItemButton>
                   <ListItemIcon>
                     <LocationOnIcon sx={{ color: "black" }} />
@@ -249,6 +251,7 @@ const Contact = () => {
           </form>
         </Grid>
       </Grid>
+      <Grid item>
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -263,6 +266,8 @@ const Contact = () => {
       ) : (
         <></>
       )}
+      </Grid>
+     
     </div>
   );
 };

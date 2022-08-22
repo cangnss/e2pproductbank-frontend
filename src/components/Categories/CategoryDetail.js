@@ -77,17 +77,18 @@ export default function CategoryDetail() {
           <TableBody>
             {productsByCategory?.map((product) => (
               <TableRow
-                key={product?.productId}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  background: "white",
-                  "&:hover": {
-                    background: "rgb(39,172,190)",
-                    background:
-                      "linear-gradient(90deg, rgba(39,172,190,1) 0%, rgba(254,254,254,1) 70%)",
-                  },
-                }}
+              key={product?.productId}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+                background: "white",
+                "&:hover": {
+                  background: "rgb(39,172,190)",
+                  background:
+                  "linear-gradient(90deg, rgba(39,172,190,1) 0%, rgba(254,254,254,1) 70%)",
+                },
+              }}
               >
+                {console.log(product)}
                 <TableCell
                   component="th"
                   scope="row"
@@ -96,7 +97,7 @@ export default function CategoryDetail() {
                 </TableCell>
                 <TableCell align="center">{product?.productName}</TableCell>
                 <TableCell align="center">
-                  {product?.productDescription}
+                <img src={`https://localhost:7182/images/${product.productImage}`} alt="icon" style={{ width:"8rem", height:"5rem", borderRadius:"15px"}} />
                 </TableCell>
                 <TableCell>
                   <Button variant="contained" size="small">

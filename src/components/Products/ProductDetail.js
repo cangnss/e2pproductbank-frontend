@@ -43,25 +43,29 @@ export default function ProductDetail() {
   const { user } = useAuth();
   const isUser = user?.status; //true
   const id = user?.id;
+  console.log("User id:", id)
   const [notify, setNotify] = useState({ message: "", show: false });
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [comments, setComments] = useState();
+  const [likes, setLikes] = useState();
   const [details, setDetails] = useState();
   const [res, setRes] = useState(false);
   const params = useParams();
   const productId = params.id;
+  const isLikedProduct = 0
 
   useEffect(() => {
     getProduct(productId);
     getComments(productId);
+    getLikes(productId)
   }, []);
 
   const getProduct = async (productId) => {
     await axios
       .get(`https://localhost:7182/api/Products/${productId}`)
       .then((res) => {
-        console.log(res);
+        console.log("product detail beklenen:",res);
         setDetails(res.data.data);
       })
       .catch((err) => {
@@ -82,6 +86,38 @@ export default function ProductDetail() {
       });
   };
 
+  const getLikes = async (productId) => {
+    await axios.get(`https://localhost:7182/api/Likes/product/${productId}`)
+                .then((res)=>{
+                  console.log("likes res:", res)
+                  setLikes(res?.data.data)
+                })
+  }
+
+  const likeProductHandler = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(`https://localhost:7182/api/Likes`, { productId:productId, userId:id })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const unLikeProductHandler = async (e) => {
+    e.preventDefault();
+    await axios
+      .delete(`https://localhost:7182/api/Likes`, { productId:productId, userId:id })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const deleteProductHandler = async () => {
     await axios
       .delete(`https://localhost:7182/api/Products?productId=${productId}`)
@@ -89,6 +125,9 @@ export default function ProductDetail() {
         console.log(res);
         setNotify({ message: res?.data.message, show: true });
         setRes(true);
+        setTimeout(() => {
+          navigate("/products");
+        }, 2000);
       });
   };
 
@@ -99,7 +138,7 @@ export default function ProductDetail() {
           <Paper
             elevation={3}
             style={{
-              width: "50%",
+              width: "75%",
               margin: "auto",
               marginBottom: "5rem",
               marginTop: "8rem",
@@ -107,11 +146,10 @@ export default function ProductDetail() {
               border: "2px solid #283991 ",
             }}
           >
-            <Grid container mt={10} direction="row">
-              <Grid item xl={6}>
+            <Grid container mt={5} display="flex" direction="row">
+              <Grid item ml={2} mb={2}>
                 <Box
                   sx={{
-                    height: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -119,14 +157,27 @@ export default function ProductDetail() {
                   mx="auto"
                 >
                   <img
-                    src={details?.productImageSrc}
+                    src={`https://localhost:7182/images/${details?.productImage}`}
                     alt="Product Image"
-                    width="100%"
-                    height="50%"
+                    style={{
+                      width: "30rem",
+                      height: "auto",
+                      borderRadius: "15px",
+                    }}
                   />
                 </Box>
               </Grid>
-              <Grid item xl={6} sx={{ textAlign: "left" }} key={details?.id}>
+              <Grid
+                item
+                sx={{
+                  textAlign: "left",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  marginLeft: "5rem",
+                }}
+                key={details?.id}
+              >
                 {notify.show && (
                   <Alert severity="success">{notify.message}</Alert>
                 )}
@@ -143,6 +194,11 @@ export default function ProductDetail() {
                 <Grid mb={5} item>
                   <Typography variant="h6">
                     Product Description: {details?.productDescription}
+                  </Typography>
+                </Grid>
+                <Grid mb={5} item>
+                  <Typography variant="h6">
+                    Product Like Count: {details?.likeCount}
                   </Typography>
                 </Grid>
                 {user && user?.status ? (
@@ -173,17 +229,6 @@ export default function ProductDetail() {
                         color="error"
                         onClick={deleteProductHandler}
                       >
-                        {/* <Link
-                          to={`/admin/delete/${details?.id}`}
-                          key={details?.id}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Delete
-                        </Link> */}
                         <DeleteIcon sx={{ marginRight: ".5rem" }}></DeleteIcon>
                         Delete
                       </Button>
@@ -199,10 +244,21 @@ export default function ProductDetail() {
                     mb={5}
                     item
                   >
-                    <Box sx={{ width: "50%", display:"flex", flexDirection:"row" }}>
+                    <Box
+                      sx={{
+                        width: "50%",
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
                       {user?.status === false ? (
                         <>
-                          <Button variant="contained" size="small" sx={{ fontWeight: "bold" }} onClick={handleOpen}>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{ fontWeight: "bold" }}
+                            onClick={handleOpen}
+                          >
                             Send Comment
                           </Button>
                           <Modal
@@ -219,10 +275,36 @@ export default function ProductDetail() {
                               />
                             </div>
                           </Modal>
-                          <Box mt={-1}>
-                            <IconButton sx={{ "&:focus": { color: "red" } }}>
-                              <FavoriteIcon fontSize="large" />
-                            </IconButton>
+                          <Box ml={2}>
+                            {likes.find((item)=>{
+                              return item.userId === id
+                            }) ? (
+                              <form onSubmit={unLikeProductHandler}>
+                                <input type="hidden" value={details?.id} />
+                                <input type="hidden" value={user?.id} />
+                                <Button
+                                  type="submit"
+                                  variant="outlined"
+                                  size="small"
+                                  startIcon={<FavoriteIcon sx={{ color:"red" }} />}
+                                >
+                                  Unlike Product
+                                </Button>
+                              </form>
+                            ) : (
+                              <form onSubmit={likeProductHandler}>
+                                <input type="hidden" value={details?.id} />
+                                <input type="hidden" value={user?.id} />
+                                <Button
+                                  type="submit"
+                                  variant="outlined"
+                                  size="small"
+                                  startIcon={<FavoriteIcon sx={{ color:"#bcbcbc" }}/>}
+                                >
+                                  Like Product
+                                </Button>
+                              </form>
+                            )}
                           </Box>
                         </>
                       ) : null}
