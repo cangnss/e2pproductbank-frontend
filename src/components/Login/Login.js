@@ -68,19 +68,20 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ display:"flex", flexDirection:"row"}}>
         <Grid
           item
-          md={12}
+          md={6}
           lg={6}
           xl={6}
-          sx={{ marginLeft: "1rem", borderRadius: "5px" }}
+          sx={{ display:{xs:"none", md:"flex", lg:"flex"}, alignItems:{ md:"center"}, marginLeft: "1rem", borderRadius: "5px" }}
         >
           <img
             src={loginPhoto}
             width="100%"
             height="100%"
             alt="Login"
+            className="loginPhoto"
             style={{ borderRadius: "5px" }}
           />
         </Grid>
@@ -93,8 +94,8 @@ const Login = () => {
           sx={{
             padding: "2rem",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: { xs:"center", sm:"center", xl:"center"},
+            justifyContent: { xs:"center",sm:"center", md:"flex-end",xl:"center"},
           }}
         >
           <form method="post" onSubmit={submitHandler}>
@@ -117,7 +118,7 @@ const Login = () => {
               item
               sx={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: { xs:"column", lg:"row", xl:"row" },
                 marginBottom: ".5rem",
               }}
             >
@@ -133,6 +134,7 @@ const Login = () => {
                   variant="outlined"
                   name="email"
                   onChange={emailHandler}
+                  sx={{ width:{ xs: "15rem", lg:"10rem"}, marginBottom:"2rem"}}
                 />
               </Box>
               <Box>
@@ -142,6 +144,7 @@ const Login = () => {
                   type="password"
                   name="password"
                   onChange={passwordHandler}
+                  sx={{ width:{ xs: "15rem", lg:"10rem"}, marginBottom:"2rem"}}
                 />
               </Box>
             </Grid>

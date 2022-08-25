@@ -1,0 +1,11 @@
+.productDetailPhoto{
+    width: 30rem;
+                      height: "auto";
+                      border-radius: "15px";
+}
+
+@media screen and (max-width:600px){
+    .productDetailPhoto{
+        width: 10rem;
+    }
+}

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context";
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
 
 export default function AdminLayout() {
   const { user } = useAuth();
@@ -9,7 +9,6 @@ export default function AdminLayout() {
   }
   return (
     <>
-      <h1>Admin Page</h1>
       <Outlet />
     </>
   );

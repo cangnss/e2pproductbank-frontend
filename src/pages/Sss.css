@@ -1,0 +1,17 @@
+@media screen and (max-width:600px){
+    .sssImage{
+        display: none;
+    }
+}
+
+@media only screen and (min-width:601px) and (max-width:768px){
+    .sssImage{
+        width: 75%;
+    }
+}
+
+@media screen and (max-width:1024px){
+    .sssImage{
+        width: 100%;
+    }
+}

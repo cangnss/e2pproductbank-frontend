@@ -80,6 +80,12 @@ export default function AddProduct() {
         console.log("res", res);
         if (res.status === 200) {
           setNotify({ message: "Product added.", error: false, success: true });
+          setProductName("");
+          setProductVendor("");
+          setProductDescription("");
+          setProductCategory("");
+          setProductImage("");
+          setProductImageFile("")
         }
       })
       .catch((err) => {
@@ -98,7 +104,15 @@ export default function AddProduct() {
     <div>
       <Paper
         elevation={8}
-        sx={{ width: "50%", margin: "auto", padding: "2rem", marginBottom:"8rem",marginTop:"5rem",borderRadius:"2rem",border:"2px solid #283991"}}
+        sx={{
+          width: "50%",
+          margin: "auto",
+          padding: "2rem",
+          marginBottom: "8rem",
+          marginTop: "5rem",
+          borderRadius: "2rem",
+          border: "2px solid #283991",
+        }}
       >
         {notify.error && <Alert severity="error">{notify.message}</Alert>}
         {notify.success && <Alert severity="success">{notify.message}</Alert>}
@@ -126,6 +140,7 @@ export default function AddProduct() {
                     id="productName"
                     name="productName"
                     placeholder="Product Name"
+                    value={productName}
                     onChange={(e) => {
                       setProductName(e.target.value);
                     }}
@@ -138,6 +153,7 @@ export default function AddProduct() {
                     id="productVendor"
                     name="productVendor"
                     placeholder="Product Vendor"
+                    value={productVendor}
                     onChange={(e) => {
                       setProductVendor(e.target.value);
                     }}
@@ -149,6 +165,7 @@ export default function AddProduct() {
                   <TextField
                     id="productDescription"
                     name="productDescription"
+                    value={productDescription}
                     multiline
                     rows={4}
                     maxRows={10}
@@ -195,7 +212,6 @@ export default function AddProduct() {
                       } else {
                         setProductImageFile(e.target.files[0]);
                         setProductImage(e.target.files[0].name);
-                        setProductImageSrc("asdasds");
                       }
                     }}
                     id="imageInput"

@@ -9,6 +9,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Grid } from "@mui/material";
 import SssPhoto from "../assets/images/SssPhoto.png";
+import "./Sss.css";
 
 // const styledButton = style(Button)`
 //     &:hover{
@@ -25,27 +26,45 @@ const Sss = () => {
   const [open6, setOpen6] = useState(false);
   return (
     <>
-    
-      <Grid container direction="row" style={{marginTop:"6rem", marginBottom:"3rem"}}>
-      <Grid item lg={6} xl={6} mt={6}>
-        <Box style={{marginTop:"4rem"}}>
-        <img style={{}} width="100%" src={SssPhoto} alt="" />
-        </Box>
-         
+      <Grid
+        container
+        direction="row"
+        style={{ marginTop: "6rem", marginBottom: "3rem" }}
+      >
+        <Grid item lg={6} xl={6} mt={6} sx={{margin:"auto", marginBottom:{ xs:"0rem"}}}>
+          <Box sx={{ marginTop: "4rem"}}>
+            <img
+              width="100%"
+              src={SssPhoto}
+              alt=""
+              className="sssImage"
+            />
+          </Box>
         </Grid>
 
-        <Grid item xl={6} lg={6} mt={5} sx={{display:"flex", justifyContent:"center", flexDirection:"column"}} >
+        <Grid
+          item
+          xl={6}
+          lg={6}
+          mt={5}
+          sx={{
+            display: "flex",
+            justifyContent: { md:"center",lg: "center" },
+            alignItems: { md:"center",lg: "center" },
+            margin:"auto",
+            flexDirection: "column",
+          }}
+        >
           <Grid
             mb={5}
             item
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-                
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -67,7 +86,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open1 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open1 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -99,13 +122,12 @@ const Sss = () => {
             item
             mb={5}
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-              
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -127,7 +149,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open2 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open2 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -159,13 +185,12 @@ const Sss = () => {
             item
             mb={5}
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-                
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -187,7 +212,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open3 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open3 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -218,13 +247,12 @@ const Sss = () => {
             item
             mb={5}
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-              
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -246,7 +274,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open4 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open4 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -277,13 +309,12 @@ const Sss = () => {
             item
             mb={5}
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-               
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -305,7 +336,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open5 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open5 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -336,13 +371,12 @@ const Sss = () => {
             item
             mb={5}
             sx={{
-              width:"65%", mx:"auto"
-             
+              width: "100%",
+              mx: "auto",
             }}
           >
             <Card
               sx={{
-               
                 border: "3px solid #283991",
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -364,7 +398,11 @@ const Sss = () => {
                     aria-label="expand"
                     size="small"
                   >
-                    {open6 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    {open6 ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </IconButton>
                 }
               ></CardHeader>
@@ -391,7 +429,6 @@ const Sss = () => {
               </div>
             </Card>
           </Grid>
-
         </Grid>
       </Grid>
     </>

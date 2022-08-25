@@ -8,18 +8,13 @@ import aboutPhoto from "../assets/images/Aboutbanner.jpg";
 function About() {
   return (
     <>
-      <div style={{ position: "relative",marginTop:"3.6rem" }}>
+      <div className="about-header">
         <h2
-          style={{
-            position: "absolute",
-            color: "black",
-            fontSize: "40px",
-            marginLeft: "8rem",
-          }}
+          className="about-header__title"
         >
           HAKKIMIZDA
         </h2>
-        <img width="100%" height="200px" src={aboutPhoto} alt="" />
+        <img className="aboutPhoto" src={aboutPhoto} alt="" />
       </div>
       <Grid
         className="about"
@@ -86,7 +81,7 @@ function About() {
           </Grid>
         </Grid>
         <Grid item direction="column">
-          <Grid item display="flex" justifyContent="center" alignItems="center">
+          <Grid item>
             <Card className="item3">
               <CardActionArea>
                 <CardContent>

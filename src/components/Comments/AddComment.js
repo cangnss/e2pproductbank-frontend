@@ -26,7 +26,7 @@ const style = {
 };
 
 export default function AddComment(props) {
-  const [notify, setNotify] = useState({ message: "", show: false });
+  const [notify, setNotify] = useState({ message: "", show: false, alert:"" });
   const [isDisabled, setIsDisabled] = useState(false);
   const [commentText, setCommentText] = useState();
   const [productId, setProductId] = useState(props?.productId);
@@ -45,11 +45,14 @@ export default function AddComment(props) {
       .then((res) => {
         console.log(res);
         if (res?.status === 200) {
-          setNotify({ message: res.data.message, show: true });
+          setNotify({ message: res.data.message, show: true, alert:"success" });
         }
       })
       .catch((err) => {
         console.log(err);
+        if(err?.response.status === 400){
+          setNotify({ message: err?.response.data.message, show:true, alert:"error" })
+        }
       });
   };
 
@@ -66,7 +69,7 @@ export default function AddComment(props) {
         </Grid>
         <Grid item display="flex" direction="column">
           {notify.show && (
-            <Alert severity={notify.show ? "success" : "error"}>
+            <Alert severity={notify.alert}>
               {notify.message}
             </Alert>
           )}

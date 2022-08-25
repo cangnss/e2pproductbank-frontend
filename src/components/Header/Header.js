@@ -68,8 +68,8 @@ const Header = () => {
           sx={{
             display: "flex",
             flexDirection: {
-              xs: "column",
-              sm: "column",
+              xs: "row",
+              sm: "row",
               md: "row",
               lg: "row",
               xl: "row",
@@ -81,8 +81,8 @@ const Header = () => {
             sx={{
               height: "auto",
               width: "auto",
-              maxHeight: { xs: 100, md: 167 },
-              maxWidth: { xs: 100, md: 250 },
+              maxHeight: { xs: 200, md: 167 },
+              maxWidth: { xs: 200, md: 250 },
             }}
             alt="Easy2Patch"
             src={e2pLogo}

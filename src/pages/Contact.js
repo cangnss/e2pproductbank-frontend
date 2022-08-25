@@ -1,5 +1,5 @@
 import "./Contact.css";
-import React from "react"
+import React from "react";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -84,7 +84,7 @@ const Contact = () => {
 
   return (
     <div className="contact">
-      <div style={{ position: "relative", marginTop: "3.5rem" }}>
+      <div className="contact-banner">
         <h2
           style={{
             position: "absolute",
@@ -109,15 +109,13 @@ const Contact = () => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            marginBottom:"10rem"
+            marginBottom: "10rem",
           }}
         >
-          <h2 style={{ alignitems: "center" }}>
-            İLETİŞİM
-          </h2>
-          <Box >
+          <h2 style={{ alignitems: "center" }}>İLETİŞİM</h2>
+          <Box>
             <List>
-              <ListItem >
+              <ListItem>
                 <ListItemButton>
                   <ListItemIcon>
                     <CallIcon sx={{ color: "black" }} />
@@ -125,7 +123,7 @@ const Contact = () => {
                   <ListItemText primary="+90 312 502 21 21" />
                 </ListItemButton>
               </ListItem>
-              <ListItem >
+              <ListItem>
                 <ListItemButton>
                   <ListItemIcon>
                     <EmailIcon sx={{ color: "black" }} />
@@ -133,7 +131,7 @@ const Contact = () => {
                   <ListItemText primary="info@arksoft.com.tr" />
                 </ListItemButton>
               </ListItem>
-              <ListItem >
+              <ListItem>
                 <ListItemButton>
                   <ListItemIcon>
                     <LocationOnIcon sx={{ color: "black" }} />
@@ -252,22 +250,21 @@ const Contact = () => {
         </Grid>
       </Grid>
       <Grid item>
-      {isLoaded ? (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-        >
-          {/* Child components, such as markers, info windows, etc. */}
+        {isLoaded ? (
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={10}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+          >
+            {/* Child components, such as markers, info windows, etc. */}
+            <></>
+          </GoogleMap>
+        ) : (
           <></>
-        </GoogleMap>
-      ) : (
-        <></>
-      )}
+        )}
       </Grid>
-     
     </div>
   );
 };

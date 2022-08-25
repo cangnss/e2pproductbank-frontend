@@ -11,3 +11,16 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* border: 1px solid black; */
 }
+
+@media screen and (max-width:600px){
+    .login{
+        background: none;
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width:1200px){
+    .login .loginPhoto{
+        width:100%;
+    }
+}

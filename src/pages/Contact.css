@@ -3,8 +3,16 @@
     background-color: #fff;
     padding-bottom: 10rem;
 }
+.contact .contact-banner{
+    position: "relative";
+    margin-top: 3.5rem;
+}
 .form-group{
     padding-top: 2.4rem;
+}
 
-
+@media screen and (max-width:600px){
+    .contact .contact-banner{
+        margin-top:8rem;
+    }
 }

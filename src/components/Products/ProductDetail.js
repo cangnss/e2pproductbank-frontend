@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import rastPhoto from "../../assets/images/logo5.png";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 import AddComment from "../Comments/AddComment";
@@ -25,6 +24,7 @@ import { useAuth } from "../../context";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import "./ProductDetail.css";
 
 const style = {
   position: "absolute",
@@ -41,31 +41,30 @@ const style = {
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const isUser = user?.status; //true
+
   const id = user?.id;
-  console.log("User id:", id)
+  console.log("User id:", id);
   const [notify, setNotify] = useState({ message: "", show: false });
   const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [comments, setComments] = useState();
   const [likes, setLikes] = useState();
   const [details, setDetails] = useState();
   const [res, setRes] = useState(false);
   const params = useParams();
   const productId = params.id;
-  const isLikedProduct = 0
+  const isLikedProduct = 0;
 
   useEffect(() => {
     getProduct(productId);
     getComments(productId);
-    getLikes(productId)
+    getLikes(productId);
   }, []);
 
   const getProduct = async (productId) => {
     await axios
       .get(`https://localhost:7182/api/Products/${productId}`)
       .then((res) => {
-        console.log("product detail beklenen:",res);
+        console.log("product detail beklenen:", res);
         setDetails(res.data.data);
       })
       .catch((err) => {
@@ -87,17 +86,21 @@ export default function ProductDetail() {
   };
 
   const getLikes = async (productId) => {
-    await axios.get(`https://localhost:7182/api/Likes/product/${productId}`)
-                .then((res)=>{
-                  console.log("likes res:", res)
-                  setLikes(res?.data.data)
-                })
-  }
+    await axios
+      .get(`https://localhost:7182/api/Likes/product/${productId}`)
+      .then((res) => {
+        console.log("likes res:", res);
+        setLikes(res?.data.data);
+      });
+  };
 
   const likeProductHandler = async (e) => {
     e.preventDefault();
     await axios
-      .post(`https://localhost:7182/api/Likes`, { productId:productId, userId:id })
+      .post(`https://localhost:7182/api/Likes`, {
+        productId: productId,
+        userId: id,
+      })
       .then((res) => {
         console.log(res);
       })
@@ -109,7 +112,10 @@ export default function ProductDetail() {
   const unLikeProductHandler = async (e) => {
     e.preventDefault();
     await axios
-      .delete(`https://localhost:7182/api/Likes`, { productId:productId, userId:id })
+      .delete(`https://localhost:7182/api/Likes`, {
+        productId: productId,
+        userId: id,
+      })
       .then((res) => {
         console.log(res);
       })
@@ -147,33 +153,33 @@ export default function ProductDetail() {
             }}
           >
             <Grid container mt={5} display="flex" direction="row">
-              <Grid item ml={2} mb={2}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  mx="auto"
-                >
+              <Grid
+                item
+                ml={2}
+                sx={{
+                  width: "50%",
+                  margin: "auto",
+                  marginBottom: "2rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box>
                   <img
                     src={`https://localhost:7182/images/${details?.productImage}`}
                     alt="Product Image"
-                    style={{
-                      width: "30rem",
-                      height: "auto",
-                      borderRadius: "15px",
-                    }}
+                    className="productDetailPhoto"
                   />
                 </Box>
               </Grid>
               <Grid
                 item
                 sx={{
-                  textAlign: "left",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  justifyContent: { xl: "flex-start" },
+                  alignItems: { xl:"flex-start"},
                   marginLeft: "5rem",
                 }}
                 key={details?.id}
@@ -181,29 +187,95 @@ export default function ProductDetail() {
                 {notify.show && (
                   <Alert severity="success">{notify.message}</Alert>
                 )}
-                <Grid mb={5} item>
-                  <Typography variant="h6">
-                    Product Name:{details?.productName}
+                <Grid
+                  mb={5}
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    Product Name:
+                  </Typography>
+                  <Typography variant="body1" ml={2}>
+                    {details?.productName}
                   </Typography>
                 </Grid>
-                <Grid mb={5} item>
-                  <Typography variant="h6">
-                    Product Vendor: {details?.productVendor}
+                <Grid
+                  mb={5}
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
+                    alignItems:{ xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start"},
+                    justifyContent:{ xs:"center", md:"flex-start", lg:"flex-start", xl:"flex-start"}
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    Product Vendor:
+                  </Typography>
+                  <Typography variant="body1" ml={2}>
+                    {details?.productVendor}
                   </Typography>
                 </Grid>
-                <Grid mb={5} item>
-                  <Typography variant="h6">
-                    Product Description: {details?.productDescription}
+                <Grid
+                  mb={5}
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
+                    alignItems: { xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start" },
+                    justifyContent: { xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start" },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    Product Description:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    ml={2}
+                    sx={{ fontSize: { xs: "12px", md:"16px", lg:"22px" } }}
+                  >
+                    {details?.productDescription}
                   </Typography>
                 </Grid>
-                <Grid mb={5} item>
-                  <Typography variant="h6">
-                    Product Like Count: {details?.likeCount}
+                <Grid
+                  mb={5}
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" }
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    Product Like Count:
+                  </Typography>
+                  <Typography variant="body1" ml={2}>
+                    {details?.likeCount}
                   </Typography>
                 </Grid>
                 {user && user?.status ? (
-                  <Grid item mb={10} display="flex" direction="row">
-                    <Box>
+                  <Grid
+                    item
+                    mb={10}
+                    display="flex"
+                    direction="row"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "5rem",
+                      flexDirection: {
+                        xs: "column",
+                        md: "row",
+                        lg: "row",
+                        xl: "row",
+                      },
+                    }}
+                  >
+                    <Box sx={{ marginBottom:{ xs:"2rem", sm:"2rem", md:"0rem", lg:"0rem", xl:"0rem"}}}>
                       <Button variant="contained">
                         <Link
                           to={`/admin/update/${details.id}`}
@@ -223,13 +295,13 @@ export default function ProductDetail() {
                         </Link>
                       </Button>
                     </Box>
-                    <Box ml={5}>
+                    <Box sx={{ marginLeft: { xs: "0rem", md:"5rem", lg:"5rem", xl: "5rem" } }}>
                       <Button
                         variant="contained"
                         color="error"
                         onClick={deleteProductHandler}
                       >
-                        <DeleteIcon sx={{ marginRight: ".5rem" }}></DeleteIcon>
+                        <DeleteIcon style={{ marginRight: ".5rem" }}></DeleteIcon>
                         Delete
                       </Button>
                     </Box>
@@ -276,8 +348,8 @@ export default function ProductDetail() {
                             </div>
                           </Modal>
                           <Box ml={2}>
-                            {likes.find((item)=>{
-                              return item.userId === id
+                            {likes.find((item) => {
+                              return item.userId === id;
                             }) ? (
                               <form onSubmit={unLikeProductHandler}>
                                 <input type="hidden" value={details?.id} />
@@ -286,7 +358,9 @@ export default function ProductDetail() {
                                   type="submit"
                                   variant="outlined"
                                   size="small"
-                                  startIcon={<FavoriteIcon sx={{ color:"red" }} />}
+                                  startIcon={
+                                    <FavoriteIcon sx={{ color: "red" }} />
+                                  }
                                 >
                                   Unlike Product
                                 </Button>
@@ -299,7 +373,9 @@ export default function ProductDetail() {
                                   type="submit"
                                   variant="outlined"
                                   size="small"
-                                  startIcon={<FavoriteIcon sx={{ color:"#bcbcbc" }}/>}
+                                  startIcon={
+                                    <FavoriteIcon sx={{ color: "#bcbcbc" }} />
+                                  }
                                 >
                                   Like Product
                                 </Button>
@@ -323,21 +399,7 @@ export default function ProductDetail() {
               alignItems="center"
               direction="column"
             >
-              <Grid item mt={2} mb={2}>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    setExpanded(!expanded);
-                  }}
-                >
-                  Comments
-                </Button>
-              </Grid>
-              <Grid item>
-                <Collapse in={expanded}>
-                  <Comments comments={comments} />
-                </Collapse>
-              </Grid>
+              <Comments comments={comments} />
             </Grid>
           </Paper>
         </>
