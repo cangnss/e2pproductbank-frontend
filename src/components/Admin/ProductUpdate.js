@@ -39,13 +39,17 @@ const ProductUpdate = () => {
   const [categoryId, setProductCategory] = useState("");
 
   useEffect(() => {
-    axios.get(`https://localhost:7182/api/Products/${id}`).then((res) => {
-      console.log(res);
-      if (res?.status === 200) {
-        setProduct(res?.data.data);
-      }
-    });
-    axios
+    const fetchProduct = async (id) => {
+      axios.get(`https://localhost:7182/api/Products/${id}`).then((res) => {
+        console.log(res);
+        if (res?.status === 200) {
+          setProduct(res?.data.data);
+        }
+      });
+    };
+    
+    const fetchCategories = async () => {
+      await axios
       .get("https://localhost:7182/api/Categories/categories")
       .then((res) => {
         console.log("categories:", res);
@@ -53,6 +57,9 @@ const ProductUpdate = () => {
           setCategories(res?.data.data);
         }
       });
+    };
+    fetchProduct(id);
+    fetchCategories()
   }, []);
 
   const categoryValue = categories?.filter(
@@ -75,6 +82,7 @@ const ProductUpdate = () => {
       "product category:",
       categoryId
     );
+    formData.append("Id", id);
     formData.append("ProductName", productName);
     formData.append("ProductVendor", productVendor);
     formData.append("ProductDescription", productDescription);
@@ -147,14 +155,17 @@ const ProductUpdate = () => {
             </Typography>
           </Grid>
           <form onSubmit={submitHandler} encType="multipart/form-data">
+            <input type="hidden" value={id} name="id" />
             <Grid item>
               <Box mb={2}>
                 <FormControl fullWidth>
                   <TextField
+                    type="text"
                     id="productName"
                     name="productName"
                     placeholder="Product Name"
                     defaultValue={product?.productName}
+                    value={productName}
                     onChange={(e) => {
                       setProductName(e.target.value);
                     }}
@@ -164,10 +175,12 @@ const ProductUpdate = () => {
               <Box mb={2}>
                 <FormControl fullWidth>
                   <TextField
+                    type="text"
                     id="productVendor"
                     name="productVendor"
                     placeholder="Product Vendor"
                     defaultValue={product?.productVendor}
+                    value={productVendor}
                     onChange={(e) => {
                       setProductVendor(e.target.value);
                     }}
@@ -183,7 +196,8 @@ const ProductUpdate = () => {
                     rows={4}
                     maxRows={10}
                     placeholder="Product Description"
-                    value={product?.productDescription}
+                    defaultValue={product?.productDescription}
+                    value={productDescription}
                     onChange={(e) => {
                       setProductDescription(e.target.value);
                     }}
