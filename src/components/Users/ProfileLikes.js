@@ -72,7 +72,7 @@ const ProfileLikes = (props) => {
                   </TableCell>
                   <TableCell align="center">{like?.product.productName}</TableCell>
                   <TableCell align="center">
-                    <img src={like?.product.productIcon} alt="icon" />
+                    <img src={`https://localhost:7182/images/${like?.product.productImage}`} alt="icon" style={{ width:"8rem", height:"5rem", borderRadius:"15px"}} />
                   </TableCell>
                   <TableCell align="center">
                     <Button variant="contained" size="small">

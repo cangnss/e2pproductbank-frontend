@@ -22,16 +22,17 @@ export default function AddCategory() {
       })
       .catch((err) => {
         console.log(err);
-        if (err?.status === 400) {
+        if (err?.response.status === 400) {
           setNotify({
             message: "Categories with the same name cannot be added again.",
             show: true,
             alert: "error",
           });
-          setTimeout(() => {
-            navigate("/addcategory");
-          }, 1500);
           setIsDisabled(true);
+          setTimeout(()=>{
+            setNotify({ show: false})
+            setIsDisabled(false)
+          },1500)
         }
       });
     console.log(response);
@@ -43,7 +44,7 @@ export default function AddCategory() {
       });
     } else {
       setNotify({
-        message: response?.data.message,
+        message: "Categories with the same name cannot be added again.",
         show: true,
         alert: "error",
       });

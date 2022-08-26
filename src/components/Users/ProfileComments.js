@@ -66,7 +66,7 @@ const ProfileComments = (props) => {
                   </TableCell>
                   <TableCell align="center">{comment?.product.productName}</TableCell>
                   <TableCell align="center">
-                    <img src={comment?.product.productIcon} alt="icon" />
+                    <img src={`https://localhost:7182/images/${comment?.product.productImage}`} alt="icon" style={{ width:"8rem", height:"5rem", borderRadius:"15px"}} />
                   </TableCell>
                   <TableCell align="center">
                     <Button variant="contained" size="small">

@@ -4,6 +4,7 @@ import {
   Button,
   Grid,
   InputLabel,
+  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -13,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
+import WestIcon from '@mui/icons-material/West';
 
 const style = {
   position: "absolute",
@@ -73,82 +75,85 @@ export default function AddComment() {
   };
 
   return (
-    <Grid>
-      <Box sx={{ width:"50%", margin:"auto", marginTop:"10rem", marginBottom:"10rem"}}>
-        <Grid>
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
-          >
-            {/* <CloseIcon
-              // onClick={closeModal}
-              mr={5}
-              variant="contained"
-              sx={{ marginTop: "1rem" }}
-            ></CloseIcon> */}
-            <Button onClick={()=>{ navigate(-1)}}>Go back</Button>
-          </Grid>
-          <Grid item display="flex" sx={{ flexDirection: "column" }}>
-            {notify.show && (
-              <Alert severity={notify.alert}>{notify.message}</Alert>
-            )}
-            <form onSubmit={addCommentHandler}>
-              <input
-                type="hidden"
-                defaultValue={productId}
-                name="productId"
-                id="productId"
-              />
-              <input
-                type="hidden"
-                defaultValue={userId}
-                name="userId"
-                id="userId"
-              />
-              <Box mb={5}>
-                <InputLabel htmlFor="commentText" sx={{ fontWeight: "bold" }}>
-                  Comment
-                </InputLabel>
-                <TextField
-                  id="commentText"
-                  name="commentText"
-                  placeholder="Your comment..."
-                  onChange={(e) => {
-                    if (e.target.value === " ") {
-                      setIsDisabled(true);
-                    } else if (
-                      e.target.value === "null" ||
-                      e.target.value === "undefined"
-                    ) {
-                      setNotify({
-                        message: "Please enter a comment!",
-                        show: false,
-                      });
-                      setIsDisabled(true);
-                    } else {
-                      setCommentText((prevState) => e.target.value);
-                      setIsDisabled(false);
-                    }
-                  }}
-                  fullWidth
+    <Paper sx={{ width:"50%", margin:"auto", borderRadius:"15px"}} elevation={10}>
+      <Grid>
+        <Box sx={{ width:"50%", margin:"auto", marginTop:"10rem", marginBottom:"10rem", padding:"5rem"}}>
+          <Grid>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                color:"#283991"
+              }}
+            >
+              {/* <CloseIcon
+                // onClick={closeModal}
+                mr={5}
+                variant="contained"
+                sx={{ marginTop: "1rem" }}
+              ></CloseIcon> */}
+              <WestIcon onClick={()=>{ navigate(-1)}}></WestIcon>
+            </Grid>
+            <Grid item display="flex" sx={{ flexDirection: "column" }}>
+              {notify.show && (
+                <Alert severity={notify.alert}>{notify.message}</Alert>
+              )}
+              <form onSubmit={addCommentHandler}>
+                <input
+                  type="hidden"
+                  defaultValue={productId}
+                  name="productId"
+                  id="productId"
                 />
-              </Box>
-              <Box display="flex" justifyContent="flex-end">
-                <Button type="submit" variant="contained" disabled={isDisabled}>
-                  <SendIcon
-                    sx={{ marginRight: ".5rem", fontSize: "medium" }}
-                  ></SendIcon>
-                  Send
-                </Button>
-              </Box>
-            </form>
+                <input
+                  type="hidden"
+                  defaultValue={userId}
+                  name="userId"
+                  id="userId"
+                />
+                <Box mb={5}>
+                  <InputLabel htmlFor="commentText" sx={{ fontWeight: "bold" }}>
+                    Comment
+                  </InputLabel>
+                  <TextField
+                    id="commentText"
+                    name="commentText"
+                    placeholder="Your comment..."
+                    onChange={(e) => {
+                      if (e.target.value === " ") {
+                        setIsDisabled(true);
+                      } else if (
+                        e.target.value === "null" ||
+                        e.target.value === "undefined"
+                      ) {
+                        setNotify({
+                          message: "Please enter a comment!",
+                          show: false,
+                        });
+                        setIsDisabled(true);
+                      } else {
+                        setCommentText((prevState) => e.target.value);
+                        setIsDisabled(false);
+                      }
+                    }}
+                    fullWidth
+                  />
+                </Box>
+                <Box display="flex" justifyContent="flex-end">
+                  <Button type="submit" variant="contained" disabled={isDisabled}>
+                    <SendIcon
+                      sx={{ marginRight: ".5rem", fontSize: "medium" }}
+                    ></SendIcon>
+                    Send
+                  </Button>
+                </Box>
+              </form>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </Grid>
+        </Box>
+      </Grid>
+    </Paper>
   );
 }

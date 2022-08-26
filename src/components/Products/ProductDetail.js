@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import "./ProductDetail.css";
+import WestIcon from '@mui/icons-material/West';
 
 const style = {
   position: "absolute",
@@ -179,6 +180,22 @@ export default function ProductDetail() {
             }}
           >
             <Grid container mt={5} display="flex" direction="row">
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  marginLeft:"2rem",
+                  color:"#283991"
+                }}
+              >
+                <WestIcon
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                ></WestIcon>
+              </Grid>
               <Grid
                 item
                 ml={2}

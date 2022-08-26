@@ -1,5 +1,6 @@
 import {
   Button,
+  Grid,
   Paper,
   Table,
   TableBody,
@@ -12,8 +13,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import WestIcon from '@mui/icons-material/West';
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryDetail() {
+  const navigate = useNavigate()
   const [productsByCategory, setProductsByCategory] = useState();
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -48,6 +52,23 @@ export default function CategoryDetail() {
           border: "2px solid #283991",
         }}
       >
+        <Grid
+        item
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          marginLeft: "2rem",
+          color: "#283991",
+          margin:"1rem 2rem",
+        }}
+      >
+        <WestIcon
+          onClick={() => {
+            navigate(-1);
+          }}
+        ></WestIcon>
+      </Grid>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -77,27 +98,32 @@ export default function CategoryDetail() {
           <TableBody>
             {productsByCategory?.map((product) => (
               <TableRow
-              key={product?.productId}
-              sx={{
-                "&:last-child td, &:last-child th": { border: 0 },
-                background: "white",
-                "&:hover": {
-                  background: "rgb(39,172,190)",
-                  background:
-                  "linear-gradient(90deg, rgba(39,172,190,1) 0%, rgba(254,254,254,1) 70%)",
-                },
-              }}
+                key={product?.productId}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  background: "white",
+                  "&:hover": {
+                    background: "rgb(39,172,190)",
+                    background:
+                      "linear-gradient(90deg, rgba(39,172,190,1) 0%, rgba(254,254,254,1) 70%)",
+                  },
+                }}
               >
                 {console.log(product)}
-                <TableCell
-                  component="th"
-                  scope="row"
-                >
+                <TableCell component="th" scope="row">
                   {product?.productVendor}
                 </TableCell>
                 <TableCell align="center">{product?.productName}</TableCell>
                 <TableCell align="center">
-                <img src={`https://localhost:7182/images/${product.productImage}`} alt="icon" style={{ width:"8rem", height:"5rem", borderRadius:"15px"}} />
+                  <img
+                    src={`https://localhost:7182/images/${product.productImage}`}
+                    alt="icon"
+                    style={{
+                      width: "8rem",
+                      height: "5rem",
+                      borderRadius: "15px",
+                    }}
+                  />
                 </TableCell>
                 <TableCell>
                   <Button variant="contained" size="small">

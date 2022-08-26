@@ -137,7 +137,7 @@ export default function ProductList() {
                           {product.productName}
                         </TableCell>
                         <TableCell align="center">
-                          <img src={product.productImageSrc} alt="icon" />
+                          <img src={`https://localhost:7182/images/${product.productImage}`} alt="icon" style={{ width:"8rem", height:"5rem", borderRadius:"15px"}} />
                         </TableCell>
                         <TableCell align="center">
                           <Button variant="contained">

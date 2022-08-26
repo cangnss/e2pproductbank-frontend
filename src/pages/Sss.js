@@ -29,10 +29,10 @@ const Sss = () => {
       <Grid
         container
         direction="row"
-        style={{ marginTop: "6rem", marginBottom: "3rem" }}
+        style={{ marginTop:"6rem", marginBottom: "3rem" }}
       >
-        <Grid item lg={6} xl={6} mt={6} sx={{margin:"auto", marginBottom:{ xs:"0rem"}}}>
-          <Box sx={{ marginTop: "4rem"}}>
+        <Grid item lg={6} xl={6} sx={{margin:"auto", marginBottom:{ xs:"0rem"}, justifyContent:{ md:"flex-start", lg:"flex-start"}, alignItems:{md:"flex-start", lg:"flex-start"}}}>
+          <Box sx={{marginTop:"10rem"}}>
             <img
               width="100%"
               src={SssPhoto}
@@ -46,7 +46,7 @@ const Sss = () => {
           item
           xl={6}
           lg={6}
-          mt={5}
+          mt={10}
           sx={{
             display: "flex",
             justifyContent: { md:"center",lg: "center" },
