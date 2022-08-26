@@ -44,15 +44,15 @@ export default function ProductDetail() {
 
   const id = user?.id;
   console.log("User id:", id);
-  const [notify, setNotify] = useState({ message: "", show: false });
+  const [notify, setNotify] = useState({ message: "", show: false, alert: "" });
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState();
   const [likes, setLikes] = useState();
   const [details, setDetails] = useState();
   const [res, setRes] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const params = useParams();
   const productId = params.id;
-  const isLikedProduct = 0;
 
   useEffect(() => {
     getProduct(productId);
@@ -60,6 +60,13 @@ export default function ProductDetail() {
     getLikes(productId);
   }, []);
 
+  console.log(details);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    console.log("calisti");
+    getComments(productId);
+    setOpen(false);
+  };
   const getProduct = async (productId) => {
     await axios
       .get(`https://localhost:7182/api/Products/${productId}`)
@@ -71,17 +78,12 @@ export default function ProductDetail() {
         console.log(err);
       });
   };
-  console.log(details);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const getComments = async (productId) => {
     await axios
       .get(`https://localhost:7182/api/Comments/product/${productId}`)
       .then((res) => {
         console.log(res);
-        setComments(res.data.data);
-        return true;
+        setComments(res?.data.data);
       });
   };
 
@@ -91,6 +93,44 @@ export default function ProductDetail() {
       .then((res) => {
         console.log("likes res:", res);
         setLikes(res?.data.data);
+      });
+  };
+  const deleteProductHandler = async () => {
+    await axios
+      .delete(`https://localhost:7182/api/Products?productId=${productId}`)
+      .then((res) => {
+        console.log(res);
+        setNotify({ message: res?.data.message, show: true, alert: "success" });
+        setRes(true);
+        setTimeout(() => {
+          navigate("/products");
+        }, 2000);
+      });
+  };
+
+  const unLikeProductHandler = async (e) => {
+    e.preventDefault();
+    await axios
+      .put(`https://localhost:7182/api/Likes`, {
+        productId: productId,
+        userId: id,
+      })
+      .then((res) => {
+        console.log(res);
+        setNotify({
+          message: "Unliked product!",
+          show: true,
+          alert: "success",
+        });
+        // setLikes(res?.data.data)
+        getLikes(productId);
+        getProduct(productId);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err?.response.status === 400) {
+          setNotify({ message: res?.data.message, show: true, alert: "error" });
+        }
       });
   };
 
@@ -103,40 +143,26 @@ export default function ProductDetail() {
       })
       .then((res) => {
         console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const unLikeProductHandler = async (e) => {
-    e.preventDefault();
-    await axios
-      .delete(`https://localhost:7182/api/Likes`, {
-        productId: productId,
-        userId: id,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const deleteProductHandler = async () => {
-    await axios
-      .delete(`https://localhost:7182/api/Products?productId=${productId}`)
-      .then((res) => {
-        console.log(res);
-        setNotify({ message: res?.data.message, show: true });
-        setRes(true);
+        setNotify({ message: "Liked product!", show: true, alert: "success" });
         setTimeout(() => {
-          navigate("/products");
+          setNotify({ show: false });
+        }, 2000);
+        // setLikes(res?.data.data)
+        getLikes(productId);
+        getProduct(productId);
+      })
+      .catch((err) => {
+        console.log(err);
+        setNotify({
+          message: "You cannot like the product you liked before!",
+          show: true,
+          alert: "error",
+        });
+        setTimeout(() => {
+          setNotify({ show: false });
         }, 2000);
       });
   };
-
   return (
     <>
       {details && comments ? (
@@ -179,20 +205,25 @@ export default function ProductDetail() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: { xl: "flex-start" },
-                  alignItems: { xl:"flex-start"},
+                  alignItems: { xl: "flex-start" },
                   marginLeft: "5rem",
                 }}
                 key={details?.id}
               >
                 {notify.show && (
-                  <Alert severity="success">{notify.message}</Alert>
+                  <Alert severity={notify.alert}>{notify.message}</Alert>
                 )}
                 <Grid
                   mb={5}
                   item
                   sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
+                    flexDirection: {
+                      xs: "column",
+                      md: "row",
+                      lg: "row",
+                      xl: "row",
+                    },
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
@@ -207,9 +238,24 @@ export default function ProductDetail() {
                   item
                   sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
-                    alignItems:{ xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start"},
-                    justifyContent:{ xs:"center", md:"flex-start", lg:"flex-start", xl:"flex-start"}
+                    flexDirection: {
+                      xs: "column",
+                      md: "row",
+                      lg: "row",
+                      xl: "row",
+                    },
+                    alignItems: {
+                      xs: "center",
+                      md: "flex-start",
+                      lg: "flex-start",
+                      xl: "flex-start",
+                    },
+                    justifyContent: {
+                      xs: "center",
+                      md: "flex-start",
+                      lg: "flex-start",
+                      xl: "flex-start",
+                    },
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
@@ -224,19 +270,40 @@ export default function ProductDetail() {
                   item
                   sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" },
-                    alignItems: { xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start" },
-                    justifyContent: { xs: "center", md:"flex-start", lg:"flex-start", xl:"flex-start" },
+                    flexDirection: {
+                      xs: "column",
+                      md: "row",
+                      lg: "row",
+                      xl: "row",
+                    },
+                    alignItems: {
+                      xs: "center",
+                      md: "flex-start",
+                      lg: "flex-start",
+                      xl: "flex-start",
+                    },
+                    justifyContent: {
+                      xs: "center",
+                      md: "flex-start",
+                      lg: "flex-start",
+                      xl: "flex-start",
+                    },
                   }}
                 >
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", textAlign: "left" }}
+                  >
                     Product Description:
                   </Typography>
                   <Typography
                     variant="body1"
                     gutterBottom
                     ml={2}
-                    sx={{ fontSize: { xs: "12px", md:"16px", lg:"22px" } }}
+                    sx={{
+                      fontSize: { xs: "12px", md: "16px", lg: "14px" },
+                      textAlign: "left",
+                    }}
                   >
                     {details?.productDescription}
                   </Typography>
@@ -246,7 +313,12 @@ export default function ProductDetail() {
                   item
                   sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", md:"row", lg:"row", xl: "row" }
+                    flexDirection: {
+                      xs: "column",
+                      md: "row",
+                      lg: "row",
+                      xl: "row",
+                    },
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
@@ -275,7 +347,17 @@ export default function ProductDetail() {
                       },
                     }}
                   >
-                    <Box sx={{ marginBottom:{ xs:"2rem", sm:"2rem", md:"0rem", lg:"0rem", xl:"0rem"}}}>
+                    <Box
+                      sx={{
+                        marginBottom: {
+                          xs: "2rem",
+                          sm: "2rem",
+                          md: "0rem",
+                          lg: "0rem",
+                          xl: "0rem",
+                        },
+                      }}
+                    >
                       <Button variant="contained">
                         <Link
                           to={`/admin/update/${details.id}`}
@@ -295,13 +377,24 @@ export default function ProductDetail() {
                         </Link>
                       </Button>
                     </Box>
-                    <Box sx={{ marginLeft: { xs: "0rem", md:"5rem", lg:"5rem", xl: "5rem" } }}>
+                    <Box
+                      sx={{
+                        marginLeft: {
+                          xs: "0rem",
+                          md: "5rem",
+                          lg: "5rem",
+                          xl: "5rem",
+                        },
+                      }}
+                    >
                       <Button
                         variant="contained"
                         color="error"
                         onClick={deleteProductHandler}
                       >
-                        <DeleteIcon style={{ marginRight: ".5rem" }}></DeleteIcon>
+                        <DeleteIcon
+                          style={{ marginRight: ".5rem" }}
+                        ></DeleteIcon>
                         Delete
                       </Button>
                     </Box>
@@ -318,9 +411,11 @@ export default function ProductDetail() {
                   >
                     <Box
                       sx={{
-                        width: "50%",
+                        width: "100%",
                         display: "flex",
                         flexDirection: "row",
+                        margin: "auto",
+                        marginBottom: "2rem",
                       }}
                     >
                       {user?.status === false ? (
@@ -329,11 +424,20 @@ export default function ProductDetail() {
                             variant="contained"
                             size="small"
                             sx={{ fontWeight: "bold" }}
-                            onClick={handleOpen}
+                            // onClick={handleOpen}
                           >
-                            Send Comment
+                            <Link
+                              to={`/comments/addcomment/${productId}`}
+                              style={{
+                                textDecoration: "none",
+                                color: "white",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Send Comment
+                            </Link>
                           </Button>
-                          <Modal
+                          {/* <Modal
                             open={open}
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
@@ -346,10 +450,11 @@ export default function ProductDetail() {
                                 closeModal={handleClose}
                               />
                             </div>
-                          </Modal>
+                          </Modal> */}
                           <Box ml={2}>
-                            {likes.find((item) => {
-                              return item.userId === id;
+                            {likes &&
+                            likes?.find((item) => {
+                              return item.status === true;
                             }) ? (
                               <form onSubmit={unLikeProductHandler}>
                                 <input type="hidden" value={details?.id} />
@@ -387,8 +492,6 @@ export default function ProductDetail() {
                     </Box>
                   </Grid>
                 )}
-
-                <Grid item></Grid>
               </Grid>
             </Grid>
             <Divider />
@@ -399,7 +502,19 @@ export default function ProductDetail() {
               alignItems="center"
               direction="column"
             >
-              <Comments comments={comments} />
+              <Grid item mt={2} mb={2}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setExpanded(!expanded);
+                  }}
+                >
+                  Comments
+                </Button>
+              </Grid>
+              <Collapse in={expanded}>
+                <Comments comments={comments} />
+              </Collapse>
             </Grid>
           </Paper>
         </>

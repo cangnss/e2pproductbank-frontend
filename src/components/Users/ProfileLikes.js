@@ -1,8 +1,14 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const ProfileLikes = (props) => {
-    const data = props?.likes
+  const [data, setData] = useState(props?.likes);
+    console.log("profile likes data:", data)
+    useEffect(()=>{
+
+    },[data])
   return (
     <>
       <TableContainer
@@ -46,7 +52,8 @@ const ProfileLikes = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((like) => {
+            
+            {data?.filter(item => item.like.status == true).map((like) => {
               return (
                 <TableRow
                   key={like?.product.id}

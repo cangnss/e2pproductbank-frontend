@@ -10,7 +10,9 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context";
 
 const style = {
   position: "absolute",
@@ -25,18 +27,23 @@ const style = {
   p: 4,
 };
 
-export default function AddComment(props) {
-  const [notify, setNotify] = useState({ message: "", show: false, alert:"" });
+export default function AddComment() {
+  const [notify, setNotify] = useState({ message: "", show: false, alert: "" });
   const [isDisabled, setIsDisabled] = useState(false);
   const [commentText, setCommentText] = useState();
-  const [productId, setProductId] = useState(props?.productId);
-  const [userId, setUserId] = useState(props?.userId);
-
-  console.log(props);
+  // const [productId, setProductId] = useState(props?.productId);
+  // const [userId, setUserId] = useState(props?.userId);
+  const params = useParams();
+  const navigate = useNavigate();
+  const productId = params?.id;
+  console.log(params);
+  const { user } = useAuth();
+  const userId = user?.id;
+  console.log(userId)
+  // console.log("props",props);
 
   const addCommentHandler = async (event) => {
     event.preventDefault();
-    console.log(typeof commentText);
 
     await axios
       .post(
@@ -45,84 +52,103 @@ export default function AddComment(props) {
       .then((res) => {
         console.log(res);
         if (res?.status === 200) {
-          setNotify({ message: res.data.message, show: true, alert:"success" });
+          setNotify({
+            message: res.data.message,
+            show: true,
+            alert: "success",
+          });
+          setCommentText("");
         }
       })
       .catch((err) => {
         console.log(err);
-        if(err?.response.status === 400){
-          setNotify({ message: err?.response.data.message, show:true, alert:"error" })
+        if (err?.response.status === 400) {
+          setNotify({
+            message: "Multiple comments cannot be made on the same product.",
+            show: true,
+            alert: "error",
+          });
         }
       });
   };
 
   return (
-    <Box sx={style}>
-      <Grid>
-        <Grid item sx={{ display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}>
-          <CloseIcon
-            onClick={props.closeModal}
-            mr={5}
-            variant="contained"
-            sx={{ marginTop: "1rem" }}
-          ></CloseIcon>
-        </Grid>
-        <Grid item display="flex" direction="column">
-          {notify.show && (
-            <Alert severity={notify.alert}>
-              {notify.message}
-            </Alert>
-          )}
-          <form onSubmit={addCommentHandler}>
-            <input
-              type="hidden"
-              defaultValue={props?.productId}
-              name="productId"
-              id="productId"
-            />
-            <input
-              type="hidden"
-              defaultValue={props?.userId}
-              name="userId"
-              id="userId"
-            />
-            <Box mb={5}>
-              <InputLabel htmlFor="commentText" sx={{ fontWeight: "bold" }}>
-                Comment
-              </InputLabel>
-              <TextField
-                id="commentText"
-                name="commentText"
-                placeholder="Your comment..."
-                onChange={(e) => {
-                  if (e.target.value === " ") {
-                    setIsDisabled(true);
-                  } else if (
-                    e.target.value === "null" ||
-                    e.target.value === "undefined"
-                  ) {
-                    setNotify({
-                      message: "Please enter a comment!",
-                      show: false,
-                    });
-                    setIsDisabled(true);
-                  } else {
-                    setCommentText((prevState) => e.target.value);
-                    setIsDisabled(false);
-                  }
-                }}
-                fullWidth
+    <Grid>
+      <Box sx={{ width:"50%", margin:"auto", marginTop:"10rem", marginBottom:"10rem"}}>
+        <Grid>
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          >
+            {/* <CloseIcon
+              // onClick={closeModal}
+              mr={5}
+              variant="contained"
+              sx={{ marginTop: "1rem" }}
+            ></CloseIcon> */}
+            <Button onClick={()=>{ navigate(-1)}}>Go back</Button>
+          </Grid>
+          <Grid item display="flex" sx={{ flexDirection: "column" }}>
+            {notify.show && (
+              <Alert severity={notify.alert}>{notify.message}</Alert>
+            )}
+            <form onSubmit={addCommentHandler}>
+              <input
+                type="hidden"
+                defaultValue={productId}
+                name="productId"
+                id="productId"
               />
-            </Box>
-            <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" variant="contained" disabled={isDisabled}>
-                <SendIcon sx={{marginRight:".5rem",fontSize:"medium"}}></SendIcon>
-                Send
-              </Button>
-            </Box>
-          </form>
+              <input
+                type="hidden"
+                defaultValue={userId}
+                name="userId"
+                id="userId"
+              />
+              <Box mb={5}>
+                <InputLabel htmlFor="commentText" sx={{ fontWeight: "bold" }}>
+                  Comment
+                </InputLabel>
+                <TextField
+                  id="commentText"
+                  name="commentText"
+                  placeholder="Your comment..."
+                  onChange={(e) => {
+                    if (e.target.value === " ") {
+                      setIsDisabled(true);
+                    } else if (
+                      e.target.value === "null" ||
+                      e.target.value === "undefined"
+                    ) {
+                      setNotify({
+                        message: "Please enter a comment!",
+                        show: false,
+                      });
+                      setIsDisabled(true);
+                    } else {
+                      setCommentText((prevState) => e.target.value);
+                      setIsDisabled(false);
+                    }
+                  }}
+                  fullWidth
+                />
+              </Box>
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="submit" variant="contained" disabled={isDisabled}>
+                  <SendIcon
+                    sx={{ marginRight: ".5rem", fontSize: "medium" }}
+                  ></SendIcon>
+                  Send
+                </Button>
+              </Box>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Grid>
   );
 }

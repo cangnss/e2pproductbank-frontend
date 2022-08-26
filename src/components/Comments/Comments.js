@@ -22,62 +22,51 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 export default function Comments(props) {
   const [updatedComments, setUpdatedComments] = useState(props?.comments);
-  const [expanded, setExpanded] = useState(false);
+  console.log(updatedComments)
   
   return (
     <>
-      <Grid item mt={2} mb={2}>
-        <Button
-          variant="contained"
-          onClick={() => {
-            setExpanded(!expanded);
-          }}
-        >
-          Comments
-        </Button>
-      </Grid>
-      <Collapse in={expanded}>
-        <Grid
-          container
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            marginBottom: "2rem",
-            marginLeft: "2rem",
-          }}
-        >
-          {updatedComments.length > 0 ? (
-            updatedComments?.map((product) => {
-              return (
-                <Grid
-                  container
-                  sx={{ display:"flex", justifyContent:"flex-start"}}
-                >
-                  <Grid item>
-                    <Avatar sx={{ marginTop: "2rem" }}>
-                      <PersonIcon />
-                    </Avatar>
-                  </Grid>
-                  <Grid
-                    item
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <h4>Anonymous Person</h4>
-                    <p>{product.commentText}</p>
-                  </Grid>
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          marginBottom: "2rem",
+          marginLeft: "2rem",
+        }}
+      >
+        {updatedComments.length > 0 ? (
+          updatedComments.map((product) => {
+            return (
+              <Grid
+                container
+                sx={{ display: "flex", justifyContent: "flex-start" }}
+                key={product.id}
+              >
+                <Grid item>
+                  <Avatar sx={{ marginTop: "2rem" }}>
+                    <PersonIcon />
+                  </Avatar>
                 </Grid>
-              );
-            })
-          ) : (
-            <Alert severity="error">The product hasn't comment!</Alert>
-          )}
-        </Grid>
-      </Collapse>
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <h4>Anonymous Person</h4>
+                  <p>{product.commentText}</p>
+                </Grid>
+              </Grid>
+            );
+          })
+        ) : (
+          <Alert severity="error">The product hasn't comment!</Alert>
+        )}
+      </Grid>
     </>
   );
 }
